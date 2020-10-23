@@ -38,7 +38,7 @@
 
 只看某个人的提交记录：
 
-```
+```Git
 git log --author=bob
 ```
 
