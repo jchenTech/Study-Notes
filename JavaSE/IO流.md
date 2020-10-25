@@ -1,3 +1,5 @@
+[toc]
+
 # File类的使用
 
 ## File类的理解
@@ -65,11 +67,11 @@ UNIX和URL使用“/”来表示
 2. 数据的流向：输入流、输出流
 3. 流的角色：节点流、处理流
 
-![image-20201012153942602](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20201012153942602.png)
+![image-20201012153942602](https://raw.githubusercontent.com/jchenTech/images/main/img/20201025191926.png)
 
 ## 流的体系结构
 
-![image-20201012154229947](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20201012154229947.png)
+![image-20201012154229947](https://raw.githubusercontent.com/jchenTech/images/main/img/20201025191927.png)
 
 说明：红框对应的是IO流中的4个抽象基类
 
@@ -304,7 +306,7 @@ public void testFileInputOutputStream()  {
 作用：提供流的读取、写入的速度
 提高读写速度的原因：内部提供了一个缓冲区。默认情况下是8kb
 
-![image-20201012175215297](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20201012175215297.png)
+![image-20201012175215297](https://raw.githubusercontent.com/jchenTech/images/main/img/20201025191928.png)
 
 ## 典型代码
 
@@ -386,7 +388,7 @@ public void testFileInputOutputStream()  {
 
 提供字节流与字符流之间的转换
 
-![image-20201012175641157](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20201012175641157.png)
+![image-20201012175641157](https://raw.githubusercontent.com/jchenTech/images/main/img/20201025191929.png)
 
 ## 转换流实现
 
@@ -651,7 +653,7 @@ Path path = Paths.get("index.html");
 
 常用方法
 
-![image-20201012203436094](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20201012203436094.png)
+![image-20201012203436094](https://raw.githubusercontent.com/jchenTech/images/main/img/20201025191930.png)
 
 ## Files工具类
 
@@ -659,6 +661,6 @@ Path path = Paths.get("index.html");
 
 常用方法：
 
-![image-20201012203609036](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20201012203609036.png)
+![image-20201012203609036](https://raw.githubusercontent.com/jchenTech/images/main/img/20201025191931.png)
 
-![image-20201012203612124](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20201012203612124.png)
+![image-20201012203612124](https://raw.githubusercontent.com/jchenTech/images/main/img/20201025191932.png)
