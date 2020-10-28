@@ -1,4 +1,4 @@
-## 1 JDBC概述
+##    1 JDBC概述
 
 ### 1.1 数据的持久化
 
@@ -25,20 +25,20 @@
 - JDBC的目标是使Java程序员使用JDBC可以连接任何**提供了JDBC驱动程序**的数据库系统，这样就使得程序员无需对特定的数据库系统的特点有过多的了解，从而大大简化和加快了开发过程。
 - 如果没有JDBC，那么Java程序访问数据库时是这样的：
 
-![1555575760234](尚硅谷_宋红康_JDBC.assets/1555575760234.png)
+![1555575760234](https://raw.githubusercontent.com/jchenTech/images/main/img/20201028205240.png)
 
 ***
 
 - 有了JDBC，Java程序访问数据库时是这样的：
 
 
-![1555575981203](尚硅谷_宋红康_JDBC.assets/1555575981203.png)
+![1555575981203](https://raw.githubusercontent.com/jchenTech/images/main/img/20201028205241.png)
 
 ***
 
 - 总结如下：
 
-![1566741692804](尚硅谷_宋红康_JDBC.assets/1566741692804.png)
+![1566741692804](https://raw.githubusercontent.com/jchenTech/images/main/img/20201028205242.png)
 
 ### 1.4 JDBC体系结构
 
@@ -68,11 +68,11 @@
   - Oracle的驱动：**oracle.jdbc.driver.OracleDriver**
   - mySql的驱动： **com.mysql.jdbc.Driver**
 
-![1555576170074](尚硅谷_宋红康_JDBC.assets/1555576170074.png)
+![1555576170074](https://raw.githubusercontent.com/jchenTech/images/main/img/20201028205243.png)
 
 - 将上述jar包拷贝到Java工程的一个目录中，习惯上新建一个lib文件夹。
 
- ![1566134718955](尚硅谷_宋红康_JDBC.assets/1566134718955.png)
+ ![1566134718955](https://raw.githubusercontent.com/jchenTech/images/main/img/20201028205244.png)
 
 在驱动jar上右键-->Add as library
 
@@ -87,7 +87,7 @@
 
   - 通常不用显式调用 DriverManager 类的 registerDriver() 方法来注册驱动程序类的实例，因为 Driver 接口的驱动程序类**都**包含了静态代码块，在这个静态代码块中，会调用 DriverManager.registerDriver() 方法来注册自身的一个实例。下图是MySQL的Driver实现类的源码：
 
-    ![1566136831283](尚硅谷_宋红康_JDBC.assets/1566136831283.png)
+    ![1566136831283](https://raw.githubusercontent.com/jchenTech/images/main/img/20201028205245.png)
 
 ### 2.2 要素二：URL
 
@@ -101,7 +101,7 @@
 
 - 举例：
 
-  ![1555576477107](尚硅谷_宋红康_JDBC.assets/1555576477107.png)
+  ![1555576477107](https://raw.githubusercontent.com/jchenTech/images/main/img/20201028205246.png)
 
 - **几种常用数据库的 JDBC URL**
 
@@ -455,7 +455,7 @@ public class StatementTest {
 
 综上：
 
-![Statement](尚硅谷_宋红康_JDBC.assets/1566569819744.png)
+![Statement](https://raw.githubusercontent.com/jchenTech/images/main/img/20201028205247.png)
 
 ### 3.3 PreparedStatement的使用
 
@@ -610,7 +610,7 @@ public <T> T getInstance(Class<T> clazz, String sql, Object... args) {
   - getString()
   - …
 
-  ![1555580152530](尚硅谷_宋红康_JDBC.assets/1555580152530.png)
+  ![1555580152530](https://raw.githubusercontent.com/jchenTech/images/main/img/20201028205248.png)
 
 #### 3.4.2 ResultSetMetaData
 
@@ -627,7 +627,7 @@ public <T> T getInstance(Class<T> clazz, String sql, Object... args) {
 
   -  isAutoIncrement(int column)：指示是否自动为指定列进行编号，这样这些列仍然是只读的。 
 
-![1555579494691](尚硅谷_宋红康_JDBC.assets/1555579494691.png)
+![1555579494691](https://raw.githubusercontent.com/jchenTech/images/main/img/20201028205249.png)
 
 **问题1：得到结果集后, 如何知道该结果集中有哪些列 ？ 列名是什么？**
 
@@ -639,13 +639,13 @@ public <T> T getInstance(Class<T> clazz, String sql, Object... args) {
 2. **获取 ResultSet 中有多少列**：调用 ResultSetMetaData 的 getColumnCount() 方法
 3. **获取 ResultSet 每一列的列的别名是什么**：调用 ResultSetMetaData 的getColumnLabel() 方法
 
-![1555579816884](尚硅谷_宋红康_JDBC.assets/1555579816884.png)
+![1555579816884](https://raw.githubusercontent.com/jchenTech/images/main/img/20201028205250.png)
 
 ### 3.5 资源的释放
 
 - 释放ResultSet, Statement,Connection。
 - 数据库连接（Connection）是非常稀有的资源，用完后必须马上释放，如果Connection不能及时正确的关闭将导致系统宕机。Connection的使用原则是**尽量晚创建，尽量早的释放。**
-- 可以在finally中关闭，保证及时其他代码出现异常，资源也一定能被关闭。
+- 可以在finally中关闭，保证即使其他代码出现异常，资源也一定能被关闭。
 
 
 
@@ -669,50 +669,7 @@ public <T> T getInstance(Class<T> clazz, String sql, Object... args) {
 
 
 
-***
-
-## 章节练习
-
-**练习题1：从控制台向数据库的表customers中插入一条数据，表结构如下：**
-
-![1555580275036](尚硅谷_宋红康_JDBC.assets/1555580275036.png)
-
-
-
-**练习题2：创立数据库表 examstudent，表结构如下：**
-
-![1555580735377](尚硅谷_宋红康_JDBC.assets/1555580735377.png)
-
-向数据表中添加如下数据：
-
-![1555580763636](尚硅谷_宋红康_JDBC.assets/1555580763636.png)
-
-**代码实现1：插入一个新的student 信息**
-
-请输入考生的详细信息
-
-Type: 
-IDCard:
-ExamCard:
-StudentName:
-Location:
-Grade:
-
-信息录入成功!
-
-**代码实现2：在 eclipse中建立 java 程序：输入身份证号或准考证号可以查询到学生的基本信息。结果如下：**
-
-![1555580937490](尚硅谷_宋红康_JDBC.assets/1555580937490.png)
-
-**代码实现3：完成学生信息的删除功能**
-
-![1555580965019](尚硅谷_宋红康_JDBC.assets/1555580965019.png)
-
-***
-
-
-
-## 第4章 操作BLOB类型字段
+## 4 操作BLOB类型字段
 
 ### 4.1 MySQL BLOB类型
 
@@ -721,7 +678,7 @@ Grade:
 
 - MySQL的四种BLOB类型(除了在存储的最大信息量上不同外，他们是等同的)
 
-![1555581069798](尚硅谷_宋红康_JDBC.assets/1555581069798.png)
+![1555581069798](https://raw.githubusercontent.com/jchenTech/images/main/img/20201028205251.png)
 
 - 实际使用中根据需要存入的数据大小定义不同的BLOB类型。
 - 需要注意的是：如果存储的文件过大，数据库的性能会下降。
@@ -814,7 +771,7 @@ if(rs.next()){
 
 
 
-## 第5章 批量插入
+## 5 批量插入
 
 ### 5.1 批量执行SQL语句
 
@@ -833,7 +790,7 @@ JDBC的批量处理语句包括下面三个方法：
 
 ### 5.2 高效的批量插入
 
-举例：向数据表中插入20000条数据
+举例：向数据表中插入20000条数据 
 
 - 数据库中提供一个goods表。创建如下：
 
@@ -964,13 +921,13 @@ public void testInsert2() throws Exception{
 
 
 
-## 第6章： 数据库事务
+## 6 数据库事务
 
 ### 6.1 数据库事务介绍
 
 - **事务：一组逻辑操作单元,使数据从一种状态变换到另一种状态。**
 
-- **事务处理（事务操作）：**保证所有事务都作为一个工作单元来执行，即使出现了故障，都不能改变这种执行方式。当在一个事务中执行多个操作时，要么所有的事务都**被提交(commit)**，那么这些修改就永久地保存下来；要么数据库管理系统将放弃所作的所有修改，整个事务**回滚(rollback)**到最初状态。
+- **事务处理（事务操作）：**保证所有事务都作为一个工作单元来执行，即使出现了故障，都不能改变这种执行方式。当在一个事务中执行多个操作时，要么所有 的事务都**被提交(commit)**，那么这些修改就永久地保存下来；要么数据库管理系统将放弃所作的所有修改，整个事务**回滚(rollback)**到最初状态。
 
 - 为确保数据库中数据的**一致性**，数据的操纵应当是离散的成组的逻辑单元：当它全部完成时，数据的一致性可以保持，而当这个单元中的一部分操作失败，整个事务应全部视为错误，所有从起始点以后的操作应全部回退到开始状态。 
 
@@ -1066,7 +1023,7 @@ public void update(Connection conn ,String sql, Object... args) {
 2. **一致性（Consistency）**
     事务必须使数据库从一个一致性状态变换到另外一个一致性状态。
 
-3. **隔离性（Isolation）**
+3.   **隔离性（Isolation）**
     事务的隔离性是指一个事务的执行不能被其他事务干扰，即一个事务内部的操作及使用的数据对并发的其他事务是隔离的，并发执行的各个事务之间不能互相干扰。
 
 4. **持久性（Durability）**
@@ -1087,7 +1044,7 @@ public void update(Connection conn ,String sql, Object... args) {
 
 - 数据库提供的4种事务隔离级别：
 
-  ![1555586275271](尚硅谷_宋红康_JDBC.assets/1555586275271.png)
+  ![事务隔离级别](https://raw.githubusercontent.com/jchenTech/images/main/img/20201028112439.png)
 
 - Oracle 支持的 2 种事务隔离级别：**READ COMMITED**, SERIALIZABLE。 Oracle 默认的事务隔离级别为: **READ COMMITED** 。
 
@@ -1138,17 +1095,17 @@ public void update(Connection conn ,String sql, Object... args) {
 
     
 
-## 第7章：DAO及相关实现类
+## 7 DAO及相关实现类
 
 - DAO：Data Access Object访问数据信息的类和接口，包括了对数据的CRUD（Create、Retrival、Update、Delete），而不包含任何业务相关的信息。有时也称作：BaseDAO
 - 作用：为了实现功能的模块化，更有利于代码的维护和升级。
 - 下面是尚硅谷JavaWeb阶段书城项目中DAO使用的体现：
 
-![1566726681515](尚硅谷_宋红康_JDBC.assets/1566726681515.png)
+![1566726681515](https://raw.githubusercontent.com/jchenTech/images/main/img/20201028205252.png)
 
 - 层次结构：
 
-![1566745811244](尚硅谷_宋红康_JDBC.assets/1566745811244.png)
+![1566745811244](https://raw.githubusercontent.com/jchenTech/images/main/img/20201028205253.png)
 
 ### 【BaseDAO.java】
 
@@ -1576,7 +1533,7 @@ public class User {
 
 
 
-## 第8章：数据库连接池
+## 8 数据库连接池
 
 ### 8.1 JDBC数据库连接池的必要性
 
@@ -1598,17 +1555,17 @@ public class User {
 - **数据库连接池**负责分配、管理和释放数据库连接，它**允许应用程序重复使用一个现有的数据库连接，而不是重新建立一个**。
 - 数据库连接池在初始化时将创建一定数量的数据库连接放到连接池中，这些数据库连接的数量是由**最小数据库连接数来设定**的。无论这些数据库连接是否被使用，连接池都将一直保证至少拥有这么多的连接数量。连接池的**最大数据库连接数量**限定了这个连接池能占有的最大连接数，当应用程序向连接池请求的连接数超过最大连接数量时，这些请求将被加入到等待队列中。
 
-![1555593464033](尚硅谷_宋红康_JDBC.assets/1555593464033.png)
+![数据库连接池](https://raw.githubusercontent.com/jchenTech/images/main/img/20201028154135.png)
 
 - **工作原理：**
 
-![1555593598606](尚硅谷_宋红康_JDBC.assets/1555593598606.png)
+![1555593598606](https://raw.githubusercontent.com/jchenTech/images/main/img/20201028205254.png)
 
 - **数据库连接池技术的优点**
 
   **1. 资源重用**
 
-  由于数据库连接得以重用，避免了频繁创建，释放连接引起的大量性能开销。在减少系统消耗的基础上，另一方面也增加了系统运行环境的平稳性。
+  由于数据库连接得以重用，避免了频繁创 开销。在减少系统消耗的基础上，另一方面也增加了系统运行环境的平稳性。
 
   **2. 更快的系统反应速度**
 
@@ -1856,7 +1813,7 @@ filters=wall
 
 
 
-## 第9章：Apache-DBUtils实现CRUD操作
+## 9 Apache-DBUtils实现CRUD操作
 
 ### 9.1 Apache-DBUtils简介
 
@@ -1868,9 +1825,9 @@ filters=wall
   - 工具类：org.apache.commons.dbutils.DbUtils   
 - API包说明：
 
-![1555595163263](尚硅谷_宋红康_JDBC.assets/1555595163263.png)
+![1555595163263](https://raw.githubusercontent.com/jchenTech/images/main/img/20201028205255.png)
 
-![1555595198644](尚硅谷_宋红康_JDBC.assets/1555595198644.png)
+![1555595198644](https://raw.githubusercontent.com/jchenTech/images/main/img/20201028205256.png)
 
 
 
