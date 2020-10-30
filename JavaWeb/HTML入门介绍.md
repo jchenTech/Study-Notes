@@ -16,13 +16,13 @@ HTML 通过标签来标记要显示的网页中的各个部分。网页文件本
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>标题</title>
-</head>
-<body>
-hello
-</body>
+	<head>
+		<meta charset="UTF-8">
+		<title>标题</title>
+	</head>
+	<body>
+		hello
+	</body>
 </html>
 ```
 
