@@ -481,3 +481,345 @@ MIME是HTTP协议中的数据类型，MIME 的英文全称是"Multipurpose Inter
 1. 到目前为止除了form标签中method=post之外，其余均为GET请求
 2. 标签不一定与标签相邻，只要根据能对应上即可
 3. 默认地址值与工程路径是两个概念，上述只是将默认地址值修改为工程路径，即上述斜杠 等代表访问到的是工程路径：http://localhost:8080/工程名，而非默认路径
+
+## 5 HttpServletRequest类
+
+### 5.1 作用
+
+每次只要有请求进入Tomcat服务器，Tomcat服务器就会把请求发来的HTTP协议信息解析好封装到Request对象中，然后传递到service方法中(调用doGet或doPost方法)供编程人员使用，编程人员通过HttpServletRequest对象，可以获取到请求的所有信息
+
+### 5.2 HttpServletRequest常用方法
+
+* getRequestURI()：获取请求的资源路径
+* getRequestURL()：获取请求的绝对路径
+* getRemoteHost()：获取客户端的ip地址
+* getHeader()：获取请求头
+* getParameter()：获取请求的参数
+* getParameterValues()：获取请求的参数(多个值时使用)
+* getMethod()：获取请求的方式(GET或POST)
+* setAttribute(key, value)：设置域数据
+* getAttribute(key)：获取域数据
+* getRequestDispatcher()：获取请求转发对象
+
+常用API示例代码：
+
+```java
+public class RequestAPIServlet extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        i. getRequestURI() 获取请求的资源路径
+        System.out.println("URI = " + req.getRequestURI());
+//        ii. getRequestURL() 获取请求的统一资源定位符（绝对路径）
+        System.out.println("URL = " + req.getRequestURL());
+//        iii. getRemoteHost() 获取客户端的ip 地址
+        /*
+         * 在IDEA中使用localhost访问时，得到的客户端ip地址是 127.0.0.1
+         * 在IDEA中使用127.0.0.1访问时，得到的客户端ip地址是 127.0.0.1
+         * 在IDEA中使用真实ip访问时，得到的客户端ip地址是真实的ip地址
+         */
+        System.out.println("ip = " + req.getRemoteHost());
+//        iv. getHeader() 获取请求头
+        System.out.println("请求头Uer-Agent = " + req.getHeader("User-Agent"));
+//        vii. getMethod() 获取请求的方式GET 或POST
+        System.out.println("请求的方式 = " + req.getMethod());
+    }
+}
+```
+
+### 5.3 如何请求参数
+
+表单：
+
+```html
+<body>
+    <form action="http://localhost:8080/07_servlet/parameterServlet" method="post">
+        用户名：<input type="text" name="username"><br/>
+        密码： <input type="password" name="password"><br/>
+        兴趣爱好：<input type="checkbox" name="hobby" value="cpp">C++
+        <input type="checkbox" name="hobby" value="java">Java
+        <input type="checkbox" name="hobby" value="js">JavaScript
+        <input type="submit">
+    </form>
+</body>
+```
+
+ParameterServlet代码：
+
+```java
+public class ParameterServlet extends HttpServlet {
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //doPost方法会出现中文请求乱码问题
+        //需要在获取任何参数之前修改字符编码集，而不仅仅获取中文参数时才修改：
+        req.setCharacterEncoding("UTF-8");
+
+        //获取请求参数
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
+        String[] hobby = req.getParameterValues("hobby");
+
+        System.out.println("用户名：" + username);
+        System.out.println("密码：" + password);
+        System.out.println("兴趣爱好：" + Arrays.asList(hobby));
+    }
+}
+
+```
+
+### 5.4 请求的转发
+
+请求转发指的是服务器收到请求之后，从一个资源跳转到另一个资源的操作，如图所示：
+
+![请求转发](https://gitee.com/jchenTech/images/raw/master/img/20201104175527.png)
+
+在src下创建Servlet1，并在web.xml中配置相应的数据：
+
+```java
+public class Servlet1 extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //获取请求的参数(查看办事的材料)
+        String username = req.getParameter("username");
+        System.out.println("在Servlet1(柜台1)中查看参数(材料):" + username);
+
+        //给材料盖章，并传递到Servlet2（柜台2）去查看
+        req.setAttribute("key1","柜台1的章");
+
+        //问路：获得通向Servlet2的路径(请求转发对象)
+        //请求转发参数必须以斜杠打头，斜杠代表http://localhost:8080/工程名/，对应IDEA代码的web目录
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/servlet2");
+
+        //通过得到的路径走向Servlet2(柜台2)
+        requestDispatcher.forward(req, resp);
+    }
+}
+```
+
+在src下创建Servlet2，并配置xml：
+
+```java
+public class Servlet2 extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // 获取请求的参数（办事的材料）查看
+        String username = req.getParameter("username");
+        System.out.println("在Servlet2（柜台2）中查看参数（材料）：" + username);
+
+        // 查看柜台1 是否有盖章
+        Object key1 = req.getAttribute("key1");
+        System.out.println("柜台1 是否有章：" + key1);
+
+        // 处理自己的业务
+        System.out.println("Servlet2 处理自己的业务");
+    }
+}
+```
+
+运行结果：
+(在浏览器的地址栏中输入：http://localhost:8080/07_servlet/servlet1?username=cjj057)
+
+```
+在Servlet1(柜台1)中查看参数(材料):cjj057
+在Servlet2（柜台2）中查看参数（材料）：cjj057
+柜台1 是否有章：柜台1的章
+Servlet2 处理自己的业务
+```
+
+可以得出地址栏的内容不发生变化，但页面自动跳转(访问)
+到了请求转发对象Servlet2中，即显示http://localhost:8080/07_servlet/servlet2的页面
+
+### 5.5 base标签的作用
+
+1. 在web目录下创建a文件夹下创建b文件夹下创建c.html
+
+   ```html
+   <!DOCTYPE html>
+   <html lang="en">
+   <head>
+       <meta charset="UTF-8">
+       <title>Title</title>
+   </head>
+   <body>
+       这是a下的b下的c.html页面<br/>
+       <a href="../../index.html">跳回首页</a><br/>
+   </body>
+   </html>
+   ```
+
+2. 在web目录下创建index.html
+
+   ```html
+   <!DOCTYPE html>
+   <html lang="en">
+   <head>
+       <meta charset="UTF-8">
+       <title>Title</title>
+   </head>
+   <body>
+       这是Web下的index.html <br/>
+       <a href="a/b/c.html">a/b/c.html</a><br/>
+   </body>
+   </html>
+   ```
+
+   两个页面可以来回跳转，分析：当在c.html页面准备点击进行跳转时浏览器的地址栏是http://localhost:8080/07_servlet/a/b/c.html，跳转到index.html页面时的a标签路径是…/…/index.html，所有相对路径在跳转时都会参照当前浏览器地址栏中的地址来进行跳转，路径正确，跳转成功。
+
+3. 创建ForwardC类，并在xml中进行配置：
+
+   ```java
+   public class ForwardC extends HttpServlet {
+       @Override
+       protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+           System.out.println("经过了ForwardC程序");
+   
+           RequestDispatcher requestDispatcher = req.getRequestDispatcher("/a/b/c.html");
+           requestDispatcher.forward(req, resp);
+       }
+   }
+   ```
+
+4. 在web目录下index.html中改为:
+
+   ```html
+   <!DOCTYPE html>
+   <html lang="en">
+   <head>
+       <meta charset="UTF-8">
+       <title>Title</title>
+   </head>
+   <body>
+       这是Web下的index.html <br/>
+       <a href="a/b/c.html">a/b/c.html</a><br/>
+       <a href="http://localhost:8080/07_servlet/forwardC">请求转发：a/b/c.html</a>
+   </body>
+   </html>
+   ```
+
+   此时：
+
+   <img src="https://gitee.com/jchenTech/images/raw/master/img/20201104192750.png" alt="index页面" style="zoom:92%;" />
+
+   ![跳回首页](https://gitee.com/jchenTech/images/raw/master/img/20201104192807.png)
+
+   <img src="https://gitee.com/jchenTech/images/raw/master/img/20201104192830.png" alt="image-20201104192830016" style="zoom: 67%;" />
+
+   点击之后无法跳转，原因是，要跳转的地址是http://localhost:8080/07_servlet/forwardC，而不是http://localhost:8080/07_servlet/a/b/c.html，在跳转抵消之后为http://localhost:8080/index.html，这是错误的路径，因此跳转失败。解决方案如下：
+
+base标签可以设置当前页面中所有相对路径跳转时参照指定的路径来进行跳转，在href属性中设置指定路径：
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--base标签设置页面相对路径工作是参照的地址
+            href属性就是参数的地址值-->
+    <base href="http://localhost:8080/07_servlet/a/b/c.html">
+</head>
+<body>
+    这是a下的b下的c.html页面<br/>
+    <a href="../../index.html">跳回首页</a><br/>
+</body>
+</html>
+```
+
+![base标签](https://gitee.com/jchenTech/images/raw/master/img/20201104202502.jpg)
+
+### 5.6 Web中的相对路径和绝对路径
+
+在javaWeb 中，路径分为相对路径和绝对路径两种：
+
+1. 相对路径是：
+   * . 表示当前目录
+   * .. 表示上一级目录
+   * 资源名表示当前目录/资源名
+
+2. 绝对路径：
+   `http://ip:port/工程路径/资源路径`
+   在实际开发中，路径都使用绝对路径，而不简单的使用相对路径。
+   * 绝对路径
+   * base+相对
+
+### 5.7 Web中/斜杠的不同意义
+
+1. `/`若被浏览器解析，得到的地址是：http://ip:port/
+
+   `<a href="/">斜杠</a>`
+
+2. `/`若被服务器解析，得到的地址是：http://ip:port/工程路径
+
+   * `<url-pattern>/servlet1</url-pattern>`
+   * `servletContext.getRealPath("/");`
+   * `request.getRequestDispatcher("/");`
+
+3. 特殊情况：`response.sendRedirect("/");` 把斜杠发送到浏览器解析，得到http://ip:port/
+
+## 6 HttpServletResponse类
+
+### 6.1 HttpServletResponse的作用
+
+`HttpServletResponse` 类和`HttpServletRequest` 类一样。每次请求进来，Tomcat 服务器都会创建一个`Response` 对象传递给Servlet 程序去使用。`HttpServletRequest` 表示请求过来的信息，`HttpServletResponse` 表示所有响应的信息，我们如果需要设置返回给客户端的信息，都可以通过`HttpServletResponse` 对象来进行设置
+
+### 6.2 两个输出流的说明该
+
+* 字节流 getOutputStream();   常用于下载（传递）二进制数据
+* 字符流 getWriter();                   常用于回传字符串（常用）
+
+注：同一个HttpServletResponse对象两个流不可同时使用，只可二选一，否则报错：
+
+![两个输出流](https://gitee.com/jchenTech/images/raw/master/img/20201104200437.png)
+
+### 6.3 如何往客户端回传数据
+
+要求： 往客户端回传字符串数据。
+
+```java
+public class ResponseIOServlet extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        PrintWriter writer = resp.getWriter();
+        writer.write("response's content!!!");
+    }
+}
+```
+
+### 6.4 响应的乱码解决
+
+解决响应中文乱码方案一（不推荐使用）：
+
+```java
+//设置服务器字符集为UTF-8
+resp.setCharacterEncoding("UTF-8");
+// 通过响应头，设置浏览器也是用UTF-8字符集
+resp.setHeader("Content-Type", "text/html; charset=UTF-8");
+```
+
+解决响应中文乱码方案二（推荐）：
+
+```java
+// 它会同时设置服务器和客户端都使用UTF-8 字符集，还设置了响应头
+// 此方法一定要在获取流对象之前调用才有效
+resp.setContentType("text/html; charset=UTF-8");
+```
+
+### 6.5 请求重定向
+
+请求重定向，是指客户端给服务器发请求，然后服务器告诉客户端说。我给你一些地址。你去新地址访问。叫请求重定向（因为之前的地址可能已经被废弃）。
+
+请求重定向的第一种方案：
+
+```java
+// 设置响应状态码302 ，表示重定向，（已搬迁）
+resp.setStatus(302);
+// 设置响应头，说明新的地址在哪里
+resp.setHeader("Location", "http://localhost:8080");
+```
+
+请求重定向的第二种方案（推荐使用）：
+
+```java
+resp.sendRedirect("http://localhost:8080");
+```
+
+![请求重定向](https://gitee.com/jchenTech/images/raw/master/img/20201104203925.png)
