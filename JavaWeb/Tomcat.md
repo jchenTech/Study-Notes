@@ -127,20 +127,22 @@
 
 # 6 IDEA整合Tomcat服务器
 
-1. IDEA中创建动态web工程
+1. IDEA中创建动态web工程（在2020版本的IDEA中，创建动态web工程的方法为：新建module-->新建Java module-->右键module选择Add Framework Support-->选择Web Application）
+
+   详情参考：https://blog.csdn.net/weixin_43716048/article/details/108639475
 
    ![2020080413392171](https://raw.githubusercontent.com/jchenTech/images/main/img/20201030143439.png)
 
 2. 在IDEA中部署工程到Tomcat中运行
-   
+
    * 每次创建web工程时，会伴随着一个Tomcat实例一起创建，如下：
      ![20200804133930593](https://raw.githubusercontent.com/jchenTech/images/main/img/20201030143449.png)
 
    * 为了防止多个web工程的Tomcat实例混淆，一般将Tomcat实例重命名为web工程的名字， 点击上图的Edit Configurations，如下：
      ![在这里插入图片描述](https://raw.githubusercontent.com/jchenTech/images/main/img/20201030145418.png)
-   
+
    * 确认Tomcat实例中有要部署运行的web工程，如下：
-   
+
      ![在这里插入图片描述](https://raw.githubusercontent.com/jchenTech/images/main/img/20201030145352.平、)
 
 3. 在IDEA中运行、停止Tomcat实例
