@@ -1,4 +1,4 @@
-# 1 JavaWeb的概念
+## 1 JavaWeb的概念
 
 1. JavaWeb是指所有通过Java语言编写的可以通过浏览器访问的程序的总称，
    JavaWeb是基于请求和响应来开发的
@@ -11,20 +11,20 @@
 
    ![请求与响应](C:\Users\lenovo\Desktop\1.png)
 
-# 2 Web资源的分类
+## 2 Web资源的分类
 
 静态资源：html，css，js，txt，mp4，jpg等
 动态资源：jsp页面，Servlet程序
 
-# 3 Tomcat概念
+## 3 Tomcat概念
 
 由Apache组织提供的一种Web服务器，提供对jsp和Servlet的支持，它是一种轻量级的javaweb容器(服务器)，也是目前应用最广泛的Javaweb服务器(免费)
 
-# 4 Tomcat服务器和Servlet版本的对应关系
+## 4 Tomcat服务器和Servlet版本的对应关系
 
 ![20200804133524551](C:\Users\lenovo\Desktop\20200804133524551.png)
 
-# 5 Tomcat的使用
+## 5 Tomcat的使用
 
 1. 将所需的zip压缩包解压到需要安装的目录
 
@@ -125,7 +125,7 @@
     * 当我们在浏览器地址栏中输入的访问地址如下：
       `http://ip:port/工程名/` ====>>>> 没有资源名，默认访问index.html 页面
 
-# 6 IDEA整合Tomcat服务器
+## 6 IDEA整合Tomcat服务器
 
 1. IDEA中创建动态web工程（在2020版本的IDEA中，创建动态web工程的方法为：新建module-->新建Java module-->右键module选择Add Framework Support-->选择Web Application）
 

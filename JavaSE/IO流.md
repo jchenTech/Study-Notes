@@ -1,6 +1,6 @@
-# File类的使用
+## 1 File类的使用
 
-## File类的理解
+### 1.1 File类的理解
 
 1. File类的一个对象，代表一个文件或一个文件目录(俗称：文件夹)
 
@@ -12,29 +12,29 @@
 
 4. 后续File类的对象常会作为参数传递到流的构造器中，指明读取或写入的"终点".
 
-## File的实例化
+### 1.2 File的实例化
 
-### 常用的构造器
+#### 1.2.1 常用的构造器
 
 * File(String filePath)
 * File(String parentPath,String childPath)
 * File(File parentFile,String childPath)
 
-### 路径的分类
+#### 1.2.2 路径的分类
 
 相对路径：相较于某个路径下，指明的路径。
 绝对路径：包含盘符在内的文件或文件目录的路径
 
 在IDEA中，main方法中的相对路径为project下，test中的相对路径在module下
 
-### 路径分隔符
+#### 1.2.3 路径分隔符
 
 windows和DOS系统默认使用“\”来表示
 UNIX和URL使用“/”来表示
 
-## File类的常用方法
+### 1.3 File类的常用方法
 
-### File类的获取功能
+#### 1.3.1 File类的获取功能
 
 * public String getAbsolutePath() 获取绝对路径
 * public String getPath 获取 路径
@@ -46,20 +46,20 @@ UNIX和URL使用“/”来表示
 * public String[] list 获取 指定目录下的所有文件或者 文件 目录 的 名称数组
 * public File[] listFiles 获取 指定目录下的所有文件或者 文件 目录 的 File 数组
 
-### File类的创建功能
+#### 1.3.2 File类的创建功能
 
 * public boolean createNewFile 创建文件 。 若 文件 存在 则不创建 返回 false
 * public boolean mkdir 创建文件 目录 。 如果 此文件目录存在 就不创建了。如果此文件目录的上层目录不存在 也不创建 。
 * public boolean mkdirs 创建文件 目录 。 如果 上层 文件 目录 不 存在 一并 创建
 
-### File类的删除功能
+#### 1.3.3 File类的删除功能
 
 * public boolean delete 删除文件或者文件夹
 **注意事项：Java中的删除不走回收站 。要删除一个 文件 目录 请注意该 文件 目录 内 不能包含文件或者 文件 目录**
 
-# IO流概述
+## 2 IO流概述
 
-## 流的分类
+### 2.1 流的分类
 
 1. 操作数据单位：字节流、字符流
 2. 数据的流向：输入流、输出流
@@ -67,7 +67,7 @@ UNIX和URL使用“/”来表示
 
 ![image-20201012153942602](https://raw.githubusercontent.com/jchenTech/images/main/img/20201025191926.png)
 
-## 流的体系结构
+### 2.2 流的体系结构
 
 ![image-20201012154229947](https://raw.githubusercontent.com/jchenTech/images/main/img/20201025191927.png)
 
@@ -75,7 +75,7 @@ UNIX和URL使用“/”来表示
 
 蓝框的流需要重点关注
 
-## 重点说明的几个流结构
+### 2.3 重点说明的几个流结构
 
 | 抽象基类     | 节点流                                        | 缓冲流                                                     |
 | ------------ | --------------------------------------------- | ---------------------------------------------------------- |
@@ -84,9 +84,9 @@ UNIX和URL使用“/”来表示
 | Reader       | FileReader (read(char[] cbuf))                | BufferedReader (read(char[] cbuf) / readLine())            |
 | Writer       | FileWriter (write(char[] cbuf,0,len)          | BufferedWriter (write(char[] cbuf,0,len) / flush()         |
 
-## 输入输出的标准化过程
+### 2.4 输入输出的标准化过程
 
-### 输入过程
+#### 2.4.1 输入过程
 
 1. 创建File类的对象，指明读取的数据的来源。（要求此文件一定要存在）
 2. 创建相应的输入流，将File类的对象作为参数，传入流的构造器中
@@ -96,7 +96,7 @@ UNIX和URL使用“/”来表示
 说明：程序中出现的异常需要使用try-catch-finally处理。
 
 
-### 输出过程
+#### 2.4.2 输出过程
 
 1. 创建File类的对象，指明写出的数据的位置。（不要求此文件一定要存在）
 2. 创建相应的输出流，将File类的对象作为参数，传入流的构造器中
@@ -105,11 +105,11 @@ UNIX和URL使用“/”来表示
 
 说明：程序中出现的异常需要使用try-catch-finally处理。
 
-# 节点流（或文件流）
+## 3 节点流（或文件流）
 
-## FileReader/FileWriter的使用
+### 3.1 FileReader/FileWriter的使用
 
-### FileReader使用
+#### 3.1.1 FileReader使用
 
 将文件内容读到程序中并输出到控制台。
 
@@ -153,7 +153,7 @@ UNIX和URL使用“/”来表示
     }
 ```
 
-### FileWriter的使用
+#### 3.2.2 FileWriter的使用
 
 从内存中写出数据到硬盘的文件里。
 
@@ -193,7 +193,7 @@ public void testFileWriter() {
 }
 ```
 
-### 文本文件的复制
+#### 3.2.3 文本文件的复制
 
 ```Java
 @Test
@@ -237,7 +237,7 @@ public void testFileWriter() {
 }
 ```
 
-## FileInputStream/FileOutputStream的使用
+### 3.2 FileInputStream/FileOutputStream的使用
 
 1. 对于文本文件(.txt,.java,.c,.cpp)，使用字符流处理
 
@@ -290,25 +290,25 @@ public void testFileInputOutputStream()  {
 }
 ```
 
-# 缓冲流
+## 4 缓冲流
 
-## 缓冲流涉及到的类
+### 4.1 缓冲流涉及到的类
 
 * BufferedInputStream
 * BufferedOutputStream
 * BufferedReader
 * BufferedWriter
 
-## 作用
+### 4.2 作用
 
 作用：提供流的读取、写入的速度
 提高读写速度的原因：内部提供了一个缓冲区。默认情况下是8kb
 
 ![image-20201012175215297](https://raw.githubusercontent.com/jchenTech/images/main/img/20201025191928.png)
 
-## 典型代码
+### 4.3 典型代码
 
-### 使用BufferedInputStream和BufferedOutputStream:处理非文本文件
+#### 4.3.1 使用BufferedInputStream和BufferedOutputStream:处理非文本文件
 
 ```Java
 @Test
@@ -364,13 +364,13 @@ public void testFileInputOutputStream()  {
 }
 ```
 
-###  使用BufferedReader和BufferedWriter：处理文本文件
+####  4.3.2 使用BufferedReader和BufferedWriter：处理文本文件
 
 与上面代码类似
 
-# 转换流
+## 5 转换流
 
-## 转换流涉及的类
+### 5.1 转换流涉及的类
 
 转换流：属于字符流
 
@@ -382,13 +382,13 @@ public void testFileInputOutputStream()  {
 
 说明：编码决定了解码的方式
 
-## 作用
+### 5.2 作用
 
 提供字节流与字符流之间的转换
 
 ![image-20201012175641157](https://raw.githubusercontent.com/jchenTech/images/main/img/20201025191929.png)
 
-## 转换流实现
+### 5.3 转换流实现
 
 综合使用InputStreamReader和OutputStreamWriter
 
@@ -421,7 +421,7 @@ public void testFileInputOutputStream()  {
     }
 ```
 
-## 常见的编码表
+### 5.4 常见的编码表
 
 * ASCII：美国标准信息交换码。
   用一个字节的7位可以表示。
@@ -432,14 +432,14 @@ public void testFileInputOutputStream()  {
 * Unicode：国际标准码，融合了目前人类使用的所字符。为每个字符分配唯一的字符码。所有的文字都用两个字节来表示。
 * UTF-8：变长的编码方式，可用1-4个字节来表示一个字符。
 
-# 其他的流
+## 6 其他的流
 
-## 标准输入输出流
+### 6.1 标准输入输出流
 
 System.in:标准的输入流，默认从键盘输入
 System.out:标准的输出流，默认从控制台输出
 
-## 打印流
+### 6.2 打印流
 
 PrintStream 和PrintWriter
 说明：
@@ -447,24 +447,24 @@ PrintStream 和PrintWriter
 * 提供了一系列重载的print()和println()方法，用于多种数据类型的输出
 * System.out返回的是PrintStream的实例
 
-## 数据流
+### 6.3 数据流
 
 DataInputStream 和 DataOutputStream
 作用：用于读取或写出基本数据类型的变量或字符串
 
-# 对象流
+## 7 对象流
 
 ObjectInputStream 和 ObjectOutputStream
 
-## 作用
+### 7.1 作用
 ObjectOutputStream:内存中的对象--->存储中的文件、通过网络传输出去：序列化过程
 ObjectInputStream:存储中的文件、通过网络接收过来 --->内存中的对象：反序列化过程
 
-## 对象的序列化机制
+### 7.2 对象的序列化机制
 
 **对象序列化机制**允许把内存中的Java对象转换成平台无关的二进制流，从而允许把这种二进制流持久地保存在磁盘上，或通过网络将这种二进制流传输到另一个网络节点。//当其它程序获取了这种二进制流，就可以恢复成原来的Java对象。
 
-## 序列化代码实现
+### 7.3 序列化代码实现
 
 ```Java
 @Test
@@ -501,7 +501,7 @@ public void testObjectOutputStream(){
 }
 ```
 
-## 反序列化代码实现
+### 7.4 反序列化代码实现
 
 ```Java
 @Test
@@ -542,9 +542,9 @@ public void testObjectInputStream(){
 * 2.当前类提供一个全局常量：serialVersionUID
 * 3.除了当前Person类需要实现Serializable接口之外，还必须保证其内部所有属性也必须是可序列化的。（默认情况下，基本数据类型可序列化）
 
-# 随机存取文件流
+## 8 随机存取文件流
 
-## 概述
+### 8.1 概述
 
 1. RandomAccessFile直接继承于java.lang.Object类，实现了DataInput和DataOutput接口。
 2. RandomAccessFile既可以作为一个输入流，又可以作为一个输出流。
@@ -552,7 +552,7 @@ public void testObjectInputStream(){
 如果写出到的文件存在，则会对原文件内容进行覆盖。（默认情况下，从头覆盖）。
 4. 可以通过相关的操作，实现RandomAccessFile“插入”数据的效果。seek(int pos)。
 
-## 文件读写代码实现
+### 8.2 文件读写代码实现
 
 ```Java
 @Test
@@ -619,9 +619,9 @@ public void test3() throws IOException {
 
 ```
 
-# NIO
+## 9 NIO
 
-## NIO使用说明
+### 9.1 NIO使用说明
 
 * Java NIO (New IO，Non-Blocking IO)是从Java 1.4版本开始引入的一套新的IO API，可以替代标准的Java IO API。
 
@@ -630,7 +630,7 @@ public void test3() throws IOException {
 * Java API 中提供了两套 NIO 一套是针对标准输入输出 NIO 另一套就是网
   络编程 NIO
 
-## Path的使用
+### 9.2 Path的使用
 
 Path可以用于替换原有的File类。
 
@@ -653,7 +653,7 @@ Path path = Paths.get("index.html");
 
 ![image-20201012203436094](https://raw.githubusercontent.com/jchenTech/images/main/img/20201025191930.png)
 
-## Files工具类
+### 9.3 Files工具类
 
 用于操作文件或文件目录的工具类
 

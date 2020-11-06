@@ -1,4 +1,4 @@
-# 1 jQuery介绍
+## 1 jQuery介绍
 
 1. 什么是jQuery ?
    jQuery，顾名思义，也就是JavaScript 和查询（Query），它就是辅助JavaScript 开发的js 类库。
@@ -10,7 +10,7 @@
 4. jQuery 好处！！！
    jQuery 是免费、开源的，jQuery 的语法设计可以使开发更加便捷，例如操作文档对象、选择DOM 元素、制作动画效果、事件处理、使用Ajax以及其他功能
 
-# 2 jQuery初体验
+## 2 jQuery初体验
 
 需求：使用jQuery 给一个按钮绑定单击事件?
 
@@ -53,7 +53,7 @@
    * 使用jQuery 查询到标签对象
    * 使用标签对象.click( function(){} );
 
-# 3 jQuery核心函数
+## 3 jQuery核心函数
 
 `$` 是jQuery 的核心函数，能完成jQuery的很多功能。`$()`就是调用$这个函数
 
@@ -68,9 +68,9 @@
 4. 传入参数为[ DOM 对象] 时：
    会把这个dom 对象转换为jQuery 对象
 
-# 4 jQuery对象和dom对象区分
+## 4 jQuery对象和dom对象区分
 
-## 4.1 什么是jQuery对象，什么是dom对象
+### 4.1 什么是jQuery对象，什么是dom对象
 
 Dom 对象
 
@@ -90,16 +90,16 @@ jQuery 对象
 3. 通过JQuery 提供的API 查询到的对象，是JQuery 对象
       jQuery 对象Alert 出来的效果是：[object Object]
 
-## 4.2 问题：jQuery对象的本质是什么？
+### 4.2 问题：jQuery对象的本质是什么？
 
 jQuery对象是dom对象的数组+jQuery提供的一系列功能函数。
 
-## 4.3 jQuery对象和Dom对象使用区别
+### 4.3 jQuery对象和Dom对象使用区别
 
 jQuery对象不能使用DOM对象的属性和方法
 DOM对象也不能使用jQuery对象的属性和方法
 
-## 4.4 Dom对象和jQuery对象互转
+### 4.4 Dom对象和jQuery对象互转
 
 1. dom 对象转化为jQuery 对象（*重点）
    * 先有DOM 对象
@@ -111,9 +111,9 @@ DOM对象也不能使用jQuery对象的属性和方法
 
 ![Dom对象和jQuery对象互转](https://raw.githubusercontent.com/jchenTech/images/main/img/20201024165641.jpg)
 
-# 5 jQuery选择器（重点）
+## 5 jQuery选择器（重点）
 
-## 5.1 基本选择器（重点）
+### 5.1 基本选择器（重点）
 
 * #ID 选择器：根据id 查找标签对象
 * .class 选择器：根据class 查找标签对象
@@ -127,14 +127,14 @@ DOM对象也不能使用jQuery对象的属性和方法
 `p.myClass`
 表示标签名必须是p 标签，而且class 类型还要是myClass
 
-## 5.2 层级选择器（重点）
+### 5.2 层级选择器（重点）
 
 * ancestor descendant 后代选择器：在给定的祖先元素下匹配所有的后代元素
 * parent > child              子元素选择器：在给定的父元素下匹配所有的子元素
 * prev + next                   相邻元素选择器：匹配所有紧接在prev 元素后的next 元素
 * prev ~ sibings              之后的兄弟元素选择器：匹配prev 元素之后的所有siblings 元素
 
-## 5.3 过滤选择器
+### 5.3 过滤选择器
 
 基本过滤器：
 
