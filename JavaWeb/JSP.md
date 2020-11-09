@@ -324,7 +324,7 @@ pageContext --> request --> session --> application
 ### 7.2 动态包含
 
 1. 使用方法：
-   <jsp:include page=””></jsp:include>
+   `<jsp:include page=""></jsp:include>`
    其中page属性设置要包含的JSP页面，与静态包含一致
 
 2. 动态包含的特点：
@@ -348,7 +348,7 @@ pageContext --> request --> session --> application
 
 ### 7.3 JSP标签-转发
 
-`<jsp:forward page=""></jsp:forward`> 是请求转发标签，它的功能就是请求转发
+`<jsp:forward page=""></jsp:forward>` 是请求转发标签，它的功能就是请求转发
 page 属性设置请求转发的路径
 
 示例说明：
