@@ -9,7 +9,7 @@
 
 4. 请求和响应的关系：
 
-   ![请求与响应](C:\Users\lenovo\Desktop\1.png)
+   ![image-20201113161820059](https://gitee.com/jchenTech/images/raw/master/img/20201113161843.png)
 
 ## 2 Web资源的分类
 
@@ -22,7 +22,7 @@
 
 ## 4 Tomcat服务器和Servlet版本的对应关系
 
-![20200804133524551](C:\Users\lenovo\Desktop\20200804133524551.png)
+![image-20201113161838120](https://gitee.com/jchenTech/images/raw/master/img/20201113161844.png)
 
 ## 5 Tomcat的使用
 
