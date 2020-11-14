@@ -350,9 +350,9 @@ Maven 包含了一个项目对象模型 (Project Object Model)，一组标准集
 <version>1.0-SNAPSHOT</version>
 <!-- 打包类型
 jar：执行 package 会打成 jar 包
-war：执行 package 会打成 war 包-->
+war：执行 package 会打成 war 包
+pom ：用于 maven 工程的继承，通常父工程设置为 pom-->
 <packaging>war</packaging>
-<!--pom ：用于 maven 工程的继承，通常父工程设置为 pom-->
 ```
 
 #### 4.2.3 坐标的来源方式
@@ -458,6 +458,59 @@ A 依赖 B，需要在 A 的 `pom.xml` 文件中添加 B 的坐标，添加坐�
 
 ![image-20201113230244103](https://gitee.com/jchenTech/images/raw/master/img/20201113231000.png)
 
-## 5 maven工程运行调试
+## 5. 总结
 
-## 6 总结
+### 5.1 maven仓库
+
+1、maven 仓库的类型有哪些？
+2、maven 工程查找仓库的流程是什么？
+3、本地仓库如何配置？
+
+
+
+### 5.2 常用的 maven 命令
+
+常用 的 maven 命令包括：
+
+* **compile**：编译
+* **clean**：清理
+* **test**：测试
+* **package**：打包
+* **install**：安装
+
+
+
+### 5.3 坐标定义
+
+在 pom.xml 中定义坐标，内容包括：groupId、artifactId、version，详细内容如下：
+
+```xml
+<!--项目名称，定义为组织名+项目名，类似包名-->
+<groupId>com.jchen.maven</groupId>
+<!-- 模块名称 -->
+<artifactId>maven-first</artifactId>
+<!-- 当前项目版本号，snapshot 为快照版本即非正式版本，release 为正式发布版本 -->
+<version>0.0.1-SNAPSHOT</version>
+<!-- 打包类型
+jar：执行 package 会打成 jar 包
+war：执行 package 会打成 war 包
+pom ：用于 maven 工程的继承，通常父工程设置为 pom-->
+<packaging>war</packaging>
+
+```
+
+### 5.4 pom基本配置
+
+pom.xml 是 Maven 项目的核心配置文件，位于每个工程的根目录，基本配置如下：
+
+* `<project>` ：文件的根节点 .
+* `<modelversion>` ： pom.xml 使用的对象模型版本
+* `<groupId>` ：项目名称，一般写项目的域名
+*  `<artifactId> `：模块名称，子项目名或模块名称
+* `<version>` ：产品的版本号 .
+*  `<packaging> `：打包类型，一般有 jar、war、pom 等
+* `<name>`：项目的显示名，常用于 Maven 生成的文档。
+*  `<description> `：项目描述，常用于 Maven 生成的文档
+* `<dependencies>` ：项目依赖构件配置，配置项目依赖构件的坐标
+*  `<build> `：项目构建配置，配置编译、运行插件等。
+
