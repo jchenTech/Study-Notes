@@ -4,18 +4,16 @@
    说明：此时的存储，主要指的是内存层面的存储，不涉及到持久化的存储（.txt,.jpg,.avi，数据库中)
 
 2. 数组存储的特点：
-* 一旦初始化以后，其长度就确定了。
-
-* 数组一旦定义好，其元素的类型也就确定了。我们也就只能操作指定类型的数据了。
+    * 一旦初始化以后，其长度就确定了。
+    * 数组一旦定义好，其元素的类型也就确定了。我们也就只能操作指定类型的数据了。
 
   比如：String[] arr; int[] arr1; Object[] arr2;
 
 3. 数组存储的弊端：
-*      一旦初始化以后，其长度就不可修改。
-*      数组中提供的方法非常限，对于添加、删除、插入数据等操作，非常不便，同时效率不高。
-*      获取数组中实际元素的个数的需求，数组没有现成的属性或方法可用
-*      数组存储数据的特点：有序、可重复。对于无序、不可重复的需求，不能满足。
-
+   * 一旦初始化以后，其长度就不可修改。
+   * 数组中提供的方法非常限，对于添加、删除、插入数据等操作，非常不便，同时效率不高。
+   * 获取数组中实际元素的个数的需求，数组没有现成的属性或方法可用
+   * 数组存储数据的特点：有序、可重复。对于无序、不可重复的需求，不能满足。
 4. 集合存储的优点：
 解决数组存储数据方面的弊端。
 
@@ -123,43 +121,8 @@ Collection接口：单列集合，用来存储一个一个的对象
    //测试Iterator中的remove()
    //如果还未调用next()或在上一次调用 next 方法之后已经调用了remove方法，再调用remove都会报IllegalStateException。
    //内部定义了remove(),可以在遍历的时候，删除集合中的元素。此方法不同于集合直接调用remove()
-       @Test
-       public void test3(){
-           Collection coll = new ArrayList();
-           coll.add(123);
-           coll.add(456);
-           coll.add(new Person("Jerry",20));
-        coll.add(new String("Tom"));
-           coll.add(false);
-   
-    //删除集合中"Tom"
- Iterator iterator = coll.iterator();
-    while (iterator.hasNext()){
-   
-   //            iterator.remove();
-         Object obj = iterator.next();
-            if("Tom".equals(obj)){
-             iterator.remove();
-   //                iterator.remove();
-            }
-    }
-    //遍历集合
-    iterator = coll.iterator();
-    while (iterator.hasNext()){
-        System.out.println(iterator.next());
-    }
-    }
-   ```
-   
-   
-
-### 3.3 增强for循环(foreach循环)
-
-1. 遍历集合举例：
-
-   ```java
    @Test
-   public void test1(){
+   public void test3(){
        Collection coll = new ArrayList();
        coll.add(123);
        coll.add(456);
@@ -167,17 +130,47 @@ Collection接口：单列集合，用来存储一个一个的对象
        coll.add(new String("Tom"));
        coll.add(false);
    
-   //for(集合元素的类型 局部变量 : 集合对象)
+       //删除集合中"Tom"
+    Iterator iterator = coll.iterator();
+       while (iterator.hasNext()){
    
-   for(Object obj : coll){
-       System.out.println(obj);
-   }
-   
+           //            iterator.remove();
+           Object obj = iterator.next();
+           if("Tom".equals(obj)){
+               iterator.remove();
+               //                iterator.remove();
+           }
+       }
+       //遍历集合
+       iterator = coll.iterator();
+       while (iterator.hasNext()){
+           System.out.println(iterator.next());
+       }
    }
    ```
+### 3.3 增强for循环(foreach循环)
 
-   说明：
-   内部仍然调用了迭代器。
+1. 遍历集合举例：
+
+    ```java
+    @Test
+    public void test1(){
+        Collection coll = new ArrayList();
+        coll.add(123);
+        coll.add(456);
+        coll.add(new Person("Jerry",20));
+        coll.add(new String("Tom"));
+        coll.add(false);
+
+    //for(集合元素的类型 局部变量 : 集合对象)
+
+        for(Object obj : coll){
+            System.out.println(obj);
+        }
+    }
+    ```
+
+   说明：内部仍然调用了迭代器。
 
 2. 遍历数组举例：
 
@@ -215,9 +208,9 @@ Collection接口：单列集合，用来存储一个一个的对象
 Collection接口：单列集合，用来存储一个一个的对象
 
 *  List接口：存储序的、可重复的数据。  -->“动态”数组,替换原的数组
-   *      ArrayList：作为List接口的主要实现类；线程不安全的，效率高；底层使用Object[] elementData存储
-   *      LinkedList：对于频繁的插入、删除操作，使用此类效率比ArrayList高；底层使用双向链表存储
-   *      Vector：作为List接口的古老实现类；线程安全的，效率低；底层使用Object[] elementData存储
+   * ArrayList：作为List接口的主要实现类；线程不安全的，效率高；底层使用Object[] elementData存储
+   * LinkedList：对于频繁的插入、删除操作，使用此类效率比ArrayList高；底层使用双向链表存储
+   * Vector：作为List接口的古老实现类；线程安全的，效率低；底层使用Object[] elementData存储
 
 ### 4.4 源码分析(难点)
 #### 4.4.1 ArrayList的源码分析：
@@ -324,12 +317,10 @@ Set接口中没有额外定义新的方法，使用的都是Collection中声明�
 
 Collection接口：单列集合，用来存储一个一个的对象
 
-*          Set接口：存储无序的、不可重复的数据   -->高中讲的“集合”
-           *          HashSet：作为Set接口的主要实现类；线程不安全的；可以存储null值
-                      *          LinkedHashSet：作为HashSet的子类；遍历其内部数据时，可以按照添加的顺序遍历；
-                                 在添加数据的同时，每个数据还维护了两个引用，记录此数据前一个数据和后一个数据；
-                                 对于频繁的遍历操作，LinkedHashSet效率高于HashSet。
-           *              TreeSet：可以照添加对象的指定属性，进行排序。
+* Set接口：存储无序的、不可重复的数据   -->高中讲的“集合”
+	* HashSet：作为Set接口的主要实现类；线程不安全的；可以存储null值
+		* LinkedHashSet：作为HashSet的子类；遍历其内部数据时，可以按照添加的顺序遍历；在添加数据的同时，每个数据还维护了两个引用，记录此数据前一个数据和后一个数据；对于频繁的遍历操作，LinkedHashSet效率高于HashSet。
+	* TreeSet：可以照添加对象的指定属性，进行排序。
 
 ### 5.5 存储对象所在类的要求
 
@@ -436,13 +427,12 @@ TreeSet:
 
 1.常用实现类结构
 Map:双列数据，存储key-value对的数据   ---类似于高中的函数：y = f(x)
-*       HashMap:作为Map的主要实现类；线程不安全的，效率高；存储null的key和value
-        *       LinkedHashMap:保证在遍历map元素时，可以照添加的顺序实现遍历。
-                原因：在原的HashMap底层结构基础上，添加了一对指针，指向前一个和后一个元素。
-                对于频繁的遍历操作，此类执行效率高于HashMap。
-*       TreeMap: 保证照添加的key-value对进行排序，实现排序遍历。此时考虑key的自然排序或定制排序；底层使用红黑树
-*       Hashtable: 作为古老的实现类；线程安全的，效率低；不能存储null的key和value
-        *       Properties: 常用来处理配置文件。key和value都是String类型
+
+* HashMap:作为Map的主要实现类；线程不安全的，效率高；存储null的key和value
+	* LinkedHashMap:保证在遍历map元素时，可以照添加的顺序实现遍历。原因：在原的HashMap底层结构基础上，添加了一对指针，指向前一个和后一个元素。对于频繁的遍历操作，此类执行效率高于HashMap。
+* TreeMap: 保证照添加的key-value对进行排序，实现排序遍历。此时考虑key的自然排序或定制排序；底层使用红黑树
+* Hashtable: 作为古老的实现类；线程安全的，效率低；不能存储null的key和value
+	* Properties: 常用来处理配置文件。key和value都是String类型
 
 
 
