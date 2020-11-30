@@ -9,7 +9,7 @@
 
 4. 请求和响应的关系：
 
-   ![image-20201113161820059](https://gitee.com/jchenTech/images/raw/master/img/20201113161843.png)
+   ![image-20201113161820059](https://raw.githubusercontent.com/jchenTech/images/main/img/20201129170929.png)
 
 ## 2 Web资源的分类
 
