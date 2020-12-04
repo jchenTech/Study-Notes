@@ -142,7 +142,9 @@
 
 **2、为虚拟机配置固定静态IP**
 
-``` bash
+`vi /etc/sysconfig/network-scripts/ifcfg-ens32`
+
+``` shell
 TYPE="Ethernet"
 PROXY_METHOD="none"
 BROWSER_ONLY="no"

@@ -52,7 +52,7 @@ halt # 关闭系统，等同于shutdown –h now 和 poweroff
 
 登录系统后，在当前命令窗口下输入命令：
 
-```bash
+```shell
 ls /
 ```
 
@@ -128,7 +128,7 @@ ls /
 
 语法：
 
-```bash
+```shell
 [root@localhost jchen]# ls [-aAdfFhilnrRSt] 目录名称
 ```
 
@@ -139,7 +139,7 @@ ls /
 
 将目录下的所有文件列出来(含属性与隐藏档)
 
-```bash
+```shell
 [root@localhost jchen]# ls -al ~
 ```
 
@@ -149,13 +149,13 @@ cd是Change Directory的缩写，这是用来变换工作目录的命令。
 
 语法：
 
-```bash
+```shell
 cd [相对路径或绝对路径]
 ```
 
 测试：
 
-```bash
+```shell
 # 切换到用户目录下
 [root@localhost jchen]# cd /home
 
@@ -181,7 +181,7 @@ cd [相对路径或绝对路径]
 
 pwd 是 **Print Working Directory** 的缩写，也就是显示目前所在目录的命令。
 
-```bash
+```shell
 [root@localhost ~]#pwd [-P]
 ```
 
@@ -189,7 +189,7 @@ pwd 是 **Print Working Directory** 的缩写，也就是显示目前所在目�
 
 测试：
 
-```bash
+```shell
 # 单纯显示出目前的工作目录
 [root@localhost ~]# pwd
 /root
@@ -204,7 +204,7 @@ pwd 是 **Print Working Directory** 的缩写，也就是显示目前所在目�
 
 如果想要创建新的目录的话，那么就使用mkdir (make directory)吧。
 
-```bash
+```shell
 mkdir [-mp] 目录名称
 ```
 
@@ -215,7 +215,7 @@ mkdir [-mp] 目录名称
 
 测试：
 
-```bash
+```shell
 # 进入我们用户目录下
 [root@localhost /]# cd /home
 
@@ -242,7 +242,7 @@ drwx--x--x 2 root root  4096 Mar 12 21:58 test2
 
 语法：
 
-```bash
+```shell
 rmdir [-p] 目录名称
 ```
 
@@ -250,7 +250,7 @@ rmdir [-p] 目录名称
 
 测试：
 
-```bash
+```shell
 # 看看有多少目录存在？
 [root@kuangshen home]# ls -l
 drwxr-xr-x 2 root root  4096 Mar 12 21:55 test
@@ -274,7 +274,7 @@ rmdir: failed to remove ‘test1’: Directory not empty
 
 语法：
 
-```bash
+```shell
 [root@localhost ~]# cp [-adfilprsu] 来源档(source) 目标档(destination)
 [root@localhost ~]# cp [options] source1 source2 source3 .... directory
 ```
@@ -293,7 +293,7 @@ rmdir: failed to remove ‘test1’: Directory not empty
 
 测试：
 
-```bash
+```shell
 # 找一个有文件的目录，我这里找到 root目录
 [root@localhost home]# cd /root
 [root@localhost ~]# ls
@@ -314,7 +314,7 @@ cp: overwrite ‘/home/install.sh’? y # n不覆盖，y为覆盖
 
 语法：
 
-```bash
+```shell
 rm [-fir] 文件或目录
 ```
 
@@ -326,7 +326,7 @@ rm [-fir] 文件或目录
 
 测试：
 
-```bash
+```shell
 # 将刚刚在 cp 的实例中创建的 install.sh删除掉！
 [root@localhost home]# rm -i install.sh
 rm: remove regular file ‘install.sh’? y
@@ -339,7 +339,7 @@ rm: remove regular file ‘install.sh’? y
 
 语法：
 
-```bash
+```shell
 [root@localhost ~]# mv [-fiu] source destination
 [root@localhost ~]# mv [options] source1 source2 source3 .... directory
 ```
@@ -352,7 +352,7 @@ rm: remove regular file ‘install.sh’? y
 
 测试：
 
-```bash
+```shell
 # 复制一个文件到当前目录
 [root@localhost home]# cp /root/install.sh /home
 
@@ -430,7 +430,7 @@ Linux系统是一种典型的多用户系统，不同的用户处于不同的地
 
 **1、chgrp：更改文件属组**
 
-```bash
+```shell
 chgrp [-R] 属组名 文件名
 ```
 
@@ -438,14 +438,14 @@ chgrp [-R] 属组名 文件名
 
 **2、chown：更改文件属主，也可以同时更改文件属组**
 
-```bash
+```shell
 chown [–R] 属主名 文件名
 chown [-R] 属主名：属组名 文件名
 ```
 
 **3、chmod：更改文件9个属性**
 
-```bash
+```shell
 chmod [-R] xyz 文件或目录
 ```
 
@@ -506,7 +506,7 @@ cat [-AbEnTv]
 
 测试：
 
-```bash
+```shell
 # 查看网络配置: 文件地址 /etc/sysconfig/network-scripts/
 [root@localhost ~]# cat /etc/sysconfig/network-scripts/ifcfg-eth0
 DEVICE=eth0
@@ -518,7 +518,7 @@ ONBOOT=yes
 
 tac与cat命令刚好相反，文件内容从最后一行开始显示，可以看出 tac 是 cat 的倒着写！如：
 
-```bash
+```shell
 [root@localhost ~]# tac /etc/sysconfig/network-scripts/ifcfg-eth0
 ONBOOT=yes
 BOOTPROTO=dhcp
@@ -531,7 +531,7 @@ DEVICE=eth0
 
 语法：
 
-```bash
+```shell
 nl [-bnw] 文件
 ```
 
@@ -543,7 +543,7 @@ nl [-bnw] 文件
 
 测试：
 
-```bash
+```shell
 [root@localhost ~]# nl /etc/sysconfig/network-scripts/ifcfg-eth0
 1DEVICE=eth0
 2BOOTPROTO=dhcp
@@ -563,7 +563,7 @@ nl [-bnw] 文件
 - q    ：代表立刻离开 more ，不再显示该文件内容。
 - b 或 [ctrl]-b ：代表往回翻页，不过这动作只对文件有用，对管线无用。
 
-```bash
+```shell
 [root@localhost etc]# more /etc/csh.login
 ....(中间省略)....
 --More--(28%) # 重点在这一行喔！你的光标也会在这里等待你的命令
@@ -584,7 +584,7 @@ less运行时可以输入的命令有：
 - N   ：反向的重复前一个搜寻 (与 / 或 ? 有关！)
 - q   ：离开 less 这个程序；
 
-```bash
+```shell
 [root@localhost etc]# more /etc/csh.login
 ....(中间省略)....
 :   # 这里可以等待你输入命令！
@@ -596,7 +596,7 @@ less运行时可以输入的命令有：
 
 语法：
 
-```bash
+```shell
 head [-n number] 文件
 ```
 
@@ -604,7 +604,7 @@ head [-n number] 文件
 
 默认的情况中，显示前面 10 行！若要显示前 20 行，就得要这样：
 
-```bash
+```shell
 [root@localhost etc]# head -n 20 /etc/csh.login
 ```
 
@@ -614,7 +614,7 @@ head [-n number] 文件
 
 语法：
 
-```bash
+```shell
 tail [-n number] 文件
 ```
 
@@ -624,7 +624,7 @@ tail [-n number] 文件
 
 默认的情况中，显示最后 10 行！若要显示最后 20 行，就得要这样：
 
-```bash
+```shell
 [root@localhost etc]# tail -n 20 /etc/csh.login
 ```
 
@@ -646,7 +646,7 @@ Linux 链接分两种，一种被称为硬链接（Hard Link），另一种被�
 
 **测试：**
 
-```bash
+```shell
 [root@localhost /]# cd /home
 [root@localhost home]# touch f1 # 创建一个测试文件f1
 [root@localhost home]# ls
@@ -661,7 +661,7 @@ f1
 
 从上面的结果中可以看出，硬连接文件 f2 与原文件 f1 的 inode 节点相同，均为 397247，然而符号连接文件的 inode 节点不同。
 
-```bash
+```shell
 # echo 字符串输出 >> f1 输出到 f1文件
 [root@localhost home]# echo "I am f1 file" >>f1
 [root@localhost home]# cat f1

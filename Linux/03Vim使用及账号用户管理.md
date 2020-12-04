@@ -264,13 +264,13 @@ $表示普通用户
 
 删除一个已有的用户账号使用userdel命令，其格式如下：
 
-```bash
+```shell
 userdel 选项 用户名
 ```
 
 常用的选项是 **-r**，它的作用是把用户的主目录一起删除。
 
-```bash
+```shell
 [root@localhost home]# userdel -r jchen
 ```
 
@@ -284,7 +284,7 @@ userdel 选项 用户名
 
 修改已有用户的信息使用usermod命令，其格式如下：
 
-```bash
+```shell
 usermod 选项 用户名
 ```
 
@@ -292,7 +292,7 @@ usermod 选项 用户名
 
 例如：
 
-```bash
+```shell
 # usermod -s /bin/ksh -d /home/z –g developer jchen
 ```
 
@@ -308,7 +308,7 @@ usermod 选项 用户名
 
 命令的格式为：
 
-```bash
+```shell
 passwd 选项 用户名
 ```
 
@@ -323,7 +323,7 @@ passwd 选项 用户名
 
 例如，假设当前用户是 jchen ，则下面的命令修改该用户自己的口令：
 
-```bash
+```shell
 $ passwd
 Old password:******
 New password:*******
@@ -332,7 +332,7 @@ Re-enter new password:*******
 
 如果是超级用户，可以用下列形式指定任何用户的口令：
 
-```bash
+```shell
 # passwd jchen
 New password:*******
 Re-enter new password:*******
@@ -366,7 +366,7 @@ passwd 命令还可以用 -l(lock) 选项锁定某一用户，使其不能登录
 
 > 增加一个新的用户组使用groupadd命令
 
-```bash
+```shell
 groupadd 选项 用户组
 ```
 
@@ -377,7 +377,7 @@ groupadd 选项 用户组
 
 实例1：
 
-```bash
+```shell
 # groupadd group1
 ```
 
@@ -385,7 +385,7 @@ groupadd 选项 用户组
 
 实例2：
 
-```bash
+```shell
 # groupadd -g 101 group2
 ```
 
@@ -395,13 +395,13 @@ groupadd 选项 用户组
 
 > 如果要删除一个已有的用户组，使用groupdel命令
 
-```bash
+```shell
 groupdel 用户组
 ```
 
 例如：
 
-```bash
+```shell
 # groupdel group1
 ```
 
@@ -411,7 +411,7 @@ groupdel 用户组
 
 > 修改用户组的属性使用groupmod命令
 
-```bash
+```shell
 groupmod 选项 用户组
 ```
 
@@ -421,7 +421,7 @@ groupmod 选项 用户组
 - -o 与-g选项同时使用，用户组的新GID可以与系统已有用户组的GID相同。
 - -n新用户组 将用户组的名字改为新名字
 
-```bash
+```shell
 # 此命令将组group2的组标识号修改为102。
 groupmod -g 102 group2
 
@@ -437,7 +437,7 @@ groupmod –g 10000 -n group3 group2
 
 用户可以在登录后，使用命令newgrp切换到其他用户组，这个命令的参数就是目的用户组。例如：
 
-```bash
+```shell
 $ newgrp root
 ```
 
@@ -459,7 +459,7 @@ Linux系统中的每个用户都在/etc/passwd文件中有一个对应的记录�
 
 这个文件对所有用户都是可读的。它的内容类似下面的例子：
 
-```bash
+```shell
 ＃ cat /etc/passwd
 
 root:x:0:0:Superuser:/:
@@ -510,7 +510,7 @@ lp:x:71:18:Printer administrator:/usr/spool/lp:
 
 7)用户登录后，要启动一个进程，负责将用户的操作传给内核，这个进程是用户登录到系统后运行的命令解释器或某个特定的程序，即Shell。
 
-Shell是用户与Linux系统之间的接口。Linux的Shell有许多种，每种都有不同的特点。常用的有sh(Bourne Shell), csh(C Shell), ksh(Korn Shell), tcsh(TENEX/TOPS-20 type C Shell), bash(Bourne Again Shell)等。
+Shell是用户与Linux系统之间的接口。Linux的Shell有许多种，每种都有不同的特点。常用的有sh(Bourne Shell), csh(C Shell), ksh(Korn Shell), tcsh(TENEX/TOPS-20 type C Shell), shell(Bourne Again Shell)等。
 
 系统管理员可以根据系统情况和用户习惯为用户指定某个Shell。如果不指定Shell，那么系统使用sh为默认的登录Shell，即这个字段的值为/bin/sh。
 
@@ -524,7 +524,7 @@ Shell是用户与Linux系统之间的接口。Linux的Shell有许多种，每种
 
 常见的伪用户如下所示：
 
-```bash
+```shell
 伪 用 户 含 义
 bin 拥有可执行的用户命令文件
 sys 拥有系统文件
@@ -544,7 +544,7 @@ nobody NFS使用
 
 它的文件格式与/etc/passwd类似，由若干个字段组成，字段之间用":"隔开。这些字段是：
 
-```bash
+```shell
 登录名:加密口令:最后一次修改时间:最小时间间隔:最大时间间隔:警告时间:不活动时间:失效时间:标志
 ```
 
@@ -571,7 +571,7 @@ nobody NFS使用
 
 用户组的所有信息都存放在/etc/group文件中。此文件的格式也类似于/etc/passwd文件，由冒号(:)隔开若干个字段，这些字段有：
 
-```bash
+```shell
 组名:口令:组标识号:组内用户列表
 ```
 
@@ -620,7 +620,7 @@ df [-ahikHTm] [目录或文件名]
 
 测试：
 
-```bash
+```shell
 # 将系统内所有的文件系统列出来！
 # 在 Linux 底下如果 df 没有加任何选项
 # 那么默认会将系统内所有的 (不含特殊内存内的文件系统与 swap) 都以 1 Kbytes 的容量来列出来！
@@ -687,7 +687,7 @@ Linux du命令也是查看使用空间的，但是与df命令不同的是Linux d
 
 语法：
 
-```bash
+```shell
 du [-ahskm] 文件或目录名称
 ```
 
@@ -702,7 +702,7 @@ du [-ahskm] 文件或目录名称
 
 测试：
 
-```bash
+```shell
 # 只列出当前目录下的所有文件夹容量（包括隐藏文件夹）:
 # 直接输入 du 没有加任何选项时，则 du 会分析当前所在目录的文件与目录所占用的硬盘空间。
 [root@localhost home]# du
@@ -712,8 +712,8 @@ du [-ahskm] 文件或目录名称
 48.                        # 这个目录(.)所占用的总量
 # 将文件的容量也列出来
 [root@localhost home]# du -a
-4./redis/.bash_profile
-4./redis/.bash_logout    
+4./redis/.shell_profile
+4./redis/.shell_logout    
 ....中间省略....
 4./kuangstudy.txt # 有文件的列表了
 48.
@@ -744,13 +744,13 @@ Linux 的磁盘挂载使用mount命令，卸载使用umount命令。
 
 磁盘挂载语法：
 
-```bash
+```shell
 mount [-t 文件系统] [-L Label名] [-o 额外选项] [-n] 装置文件名 挂载点
 ```
 
 测试：
 
-```bash
+```shell
 # 将 /dev/hdc6 挂载到 /mnt/hdc6 上面！
 [root@localhost ~]# mkdir /mnt/hdc6
 [root@localhost ~]# mount /dev/hdc6 /mnt/hdc6
@@ -761,7 +761,7 @@ Filesystem           1K-blocks     Used Available Use% Mounted on
 
 磁盘卸载命令 umount 语法：
 
-```bash
+```shell
 umount [-fn] 装置文件名或挂载点
 ```
 
@@ -772,6 +772,6 @@ umount [-fn] 装置文件名或挂载点
 
 卸载/dev/hdc6
 
-```bash
+```shell
 [root@localhost ~]# umount /dev/hdc6
 ```
