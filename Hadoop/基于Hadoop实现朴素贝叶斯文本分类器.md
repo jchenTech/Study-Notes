@@ -101,7 +101,7 @@ $$
 
 `InitSequenceFileJob`中将.txt格式的输入文件转换成SequenceFile，其中的Map后的Key是“文档类型@文件名”，Value为输入的txt文件的内容，通过重写`FileInputFormat`和`RecordReader` 将输入的文件内容处理成byte数组进行进行存储。Reduce不做任何操作，因此所有的.txt文件输出为一个序列文件，里面的Key-Value对即为 `<文档类型@文件名，文档内容 >`。
 
-![InitSequenceFileJob中MapReduce程序的Dataflow图](E:\Naive-Bayes-Classification\MapReduce数据流图\InitSequence.png)
+![InitSequenceFileJob中MapReduce程序的Dataflow图](https://gitee.com/jchenTech/images/raw/master/img/20201206225626.png)
 
 
 
@@ -113,7 +113,7 @@ $$
 2. Map输出的键值对传给Combine，将相同key的键值对中的value合并为一个数组，此时的key-value对为：`<文档类型，[1,1,...]>` 
 3. Combine的输出交给Reducer，在Reduce中对value数组进行求和，这样就得到了每个文档类型如：CANA和CHINA的文档总数，计算出来的文档总数将用于训练后续的先验概率。
 
-![GetDocCountFromDocTypeJob中MapReduce的DataFlow图](E:\Naive-Bayes-Classification\MapReduce数据流图\DocCount.png)
+![GetDocCountFromDocTypeJob中MapReduce的DataFlow图](https://gitee.com/jchenTech/images/raw/master/img/20201206225627.png)
 
 
 
@@ -125,7 +125,7 @@ $$
 2. Map输出的键值对传给Combine，将相同key的键值对中的value合并为一个数组，此时的key-value对为：`<文档类型@单词，[1,1,...]>` 
 3. Combine的输出交给Reducer，在Reduce中对value数组进行求和，这样就得到了每个文档类型中所有单个单词的数量，如：change在CANA类别中的总数，计算出来的单词总数将用于训练后续的条件概率，此时输出的key-value对为：`<文档类型@单词，单词总数>` 。
 
-![GetSingleWordCountFromDocTypeJob中的MapReduce的DataFlow图](E:\Naive-Bayes-Classification\MapReduce数据流图\SingWordCount.png)
+![GetSingleWordCountFromDocTypeJob中的MapReduce的DataFlow图](https://gitee.com/jchenTech/images/raw/master/img/20201206225628.png)
 
 
 
@@ -137,7 +137,7 @@ $$
 2. Map输出的键值对传给Combine，将相同key的键值对中的value合并为一个数组，此时的key-value对为：`<文档类型，[Count1,Count2,...]>` 
 3. Combine的输出交给Reducer，在Reduce中对value数组进行求和，这样就得到了每个文档类型中所有单词的总数量，如：CANA类型中的单词总数，计算出来的单词总数将用于训练后续的条件概率，此时输出的key-value对为：`<文档类型，单词总数>` 。
 
-![GetTotalWordCountFromDocTypeJob中的MapReduce的DataFlow图](E:\Naive-Bayes-Classification\MapReduce数据流图\TotalWordCount.png)
+![GetTotalWordCountFromDocTypeJob中的MapReduce的DataFlow图](https://gitee.com/jchenTech/images/raw/master/img/20201206225629.png)
 
 
 
@@ -149,7 +149,7 @@ $$
 2. Map的输入为Key-Value对为 `<文档类型@文件名，文件内容>` 的SequenceFile，Map之后的key为文档类型@文件名，如：CANA@477888newsML.txt，value为该文档属于每个类别的概率，即每个文档对应一个键值对 `<文档类型@文件名，每个类别对应的概率>` 。
 3. Map的输出交给Reducer，在Reduce中计算属于每个文档概率的最大值作为value，这样就得到了每个文档属于最大概率的类别，此时输出的key-value对为：`<文档类型@文件名，文档类型@最大条件概率>` 。
 
-![NaiveBayes](E:\Naive-Bayes-Classification\MapReduce数据流图\NaiveBayes.png)
+![NaiveBayes](https://gitee.com/jchenTech/images/raw/master/img/20201206225630.png)
 
 ### 3.6 Evaluation
 
@@ -177,7 +177,7 @@ $$
 
 两个InitSequenceFileJob分别是对测试机和训练集文件进行序列化操作，将.txt文件输出为SequenceFile。
 
-![训练集的InitSequenceFileJob任务运行截图](E:\Naive-Bayes-Classification\结果截图\InitSequenceFileJob.png)
+![训练集的InitSequenceFileJob任务运行截图](https://gitee.com/jchenTech/images/raw/master/img/20201206225631.png)
 
 
 
@@ -185,7 +185,7 @@ $$
 
 GetDocCountFromDocTypeJob有1个Map任务和1个Reduce任务，根据InitSequenceFileJob输出的sequence_file经过Map和Reduce后统计每个DocType有多少个文档。
 
-![GetDocCountFromDocTypeJob任务运行截图](E:\Naive-Bayes-Classification\结果截图\GetDocCountFromDocTypeJob.png)
+![GetDocCountFromDocTypeJob任务运行截图](https://gitee.com/jchenTech/images/raw/master/img/20201206225632.png)
 
 
 
@@ -193,7 +193,7 @@ GetDocCountFromDocTypeJob有1个Map任务和1个Reduce任务，根据InitSequenc
 
 GetSingleWordCountFromDocTypeJob有1个Map任务和1个Reduce任务，根据InitSequenceFileJob输出的sequence_file统计每个单词在每个文档类别中出现的次数。
 
-![GetSingleWordCountFromTypeJob任务运行截图](E:\Naive-Bayes-Classification\结果截图\GetSingleWordCountFromTypeJob.png)
+![GetSingleWordCountFromTypeJob任务运行截图](https://gitee.com/jchenTech/images/raw/master/img/20201206225633.png)
 
 
 
@@ -201,7 +201,7 @@ GetSingleWordCountFromDocTypeJob有1个Map任务和1个Reduce任务，根据Init
 
 GetTotalWordCountFromDocTypeJob有1个Map任务和1个Reduce任务，根据GetSingleWordCountFromDocTypeJob输出的sequence_file统计每个文档类别的总单词数。
 
-![GetTotalWordCountFromDocTypeJob任务运行截图](E:\Naive-Bayes-Classification\结果截图\GetTotalWordCountFromDocTypeJob.png)
+![GetTotalWordCountFromDocTypeJob任务运行截图](https://gitee.com/jchenTech/images/raw/master/img/20201206225634.png)
 
 
 
@@ -209,7 +209,7 @@ GetTotalWordCountFromDocTypeJob有1个Map任务和1个Reduce任务，根据GetSi
 
 GetNaiveBayesResultJob有1个Map任务和1个Reduce任务，读取InitSequenceFileJob生成的测试集的sequence_file计算测试集的每个文档分成每一类的概率。
 
-![GetNaiveBayesResultJob任务运行截图](E:\Naive-Bayes-Classification\结果截图\GetNaiveBayesResultJob.png)
+![GetNaiveBayesResultJob任务运行截图](https://gitee.com/jchenTech/images/raw/master/img/20201206225635.png)
 
 
 
@@ -217,15 +217,15 @@ GetNaiveBayesResultJob有1个Map任务和1个Reduce任务，读取InitSequenceFi
 
 Evaluation程序为单机程序，因此没有Map和Reduce任务，该程序对各文档的贝叶斯分类结果进行评估，计算各文档FP、TP、FN、TN、Precision、Recall、F1以及整体的宏平均、微平均。
 
-![Evaluation程序运行截图](E:\Naive-Bayes-Classification\结果截图\指标结果.png)
+![Evaluation程序运行截图](https://gitee.com/jchenTech/images/raw/master/img/20201206225636.png)
 
 
 
 7、Web页面的作业监控截图
 
-![WEB界面作业监控截图](E:\Naive-Bayes-Classification\结果截图\WEB界面截图.png)
+![WEB界面作业监控截图](https://gitee.com/jchenTech/images/raw/master/img/20201206225637.png)
 
-![WEB界面任务计算结果](E:\Naive-Bayes-Classification\结果截图\WEB界面结果.png)
+![WEB界面任务计算结果](https://gitee.com/jchenTech/images/raw/master/img/20201206225638.png)
 
 
 
