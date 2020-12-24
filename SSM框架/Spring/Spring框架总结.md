@@ -1707,7 +1707,9 @@ public class Test {
 
 ### 9.1 什么是AOP
 
-AOP（Aspect Oriented Programming）意为：面向切面编程，通过预编译方式和运行期动态代理实现程序功能的统一维护的一种技术。AOP是OOP的延续，是软件开发中的一个热点，也是Spring框架中的一个重要内容，是函数式编程的一种衍生范型。利用AOP可以对业务逻辑的各个部分进行隔离，从而使得业务逻辑各部分之间的耦合度降低，提高程序的可重用性，同时提高了开发的效率。
+AOP（Aspect Oriented Programming）意为：面向切面编程，通过预编译方式和运行期动态代理实现程序功能的统一维护的一种技术。利用AOP可以对业务逻辑的各个部分进行隔离，从而使得业务逻辑各部分之间的耦合度降低，提高程序的可重用性，同时提高了开发的效率。
+
+通俗描述：不通过修改源代码方式，在主干功能里面添加新功能
 
 ![图片](https://gitee.com/jchenTech/images/raw/master/img/20201219212541.png)
 
@@ -1883,7 +1885,7 @@ public class DiyPointcut {
 <aop:config>
    <!--第二种方式：使用AOP的标签实现-->
    <aop:aspect ref="diy">
-       <aop:pointcut id="diyPonitcut" expression="execution(* com.kuang.service.UserServiceImpl.*(..))"/>
+       <aop:pointcut id="diyPonitcut" expression="execution(* com.jchen.service.UserServiceImpl.*(..))"/>
        <aop:before pointcut-ref="diyPonitcut" method="before"/>
        <aop:after pointcut-ref="diyPonitcut" method="after"/>
    </aop:aspect>
@@ -1918,17 +1920,17 @@ import org.aspectj.lang.annotation.Before;
 
 @Aspect
 public class AnnotationPointcut {
-   @Before("execution(* com.kuang.service.UserServiceImpl.*(..))")
+   @Before("execution(* com.jchen.service.UserServiceImpl.*(..))")
    public void before(){
        System.out.println("---------方法执行前---------");
   }
 
-   @After("execution(* com.kuang.service.UserServiceImpl.*(..))")
+   @After("execution(* com.jchen.service.UserServiceImpl.*(..))")
    public void after(){
        System.out.println("---------方法执行后---------");
   }
 
-   @Around("execution(* com.kuang.service.UserServiceImpl.*(..))")
+   @Around("execution(* com.jchen.service.UserServiceImpl.*(..))")
    public void around(ProceedingJoinPoint jp) throws Throwable {
        System.out.println("环绕前");
        System.out.println("签名:"+jp.getSignature());
@@ -1944,7 +1946,7 @@ public class AnnotationPointcut {
 
 ```xml
 <!--第三种方式:注解实现-->
-<bean id="annotationPointcut" class="com.kuang.config.AnnotationPointcut"/>
+<bean id="annotationPointcut" class="com.jchen.config.AnnotationPointcut"/>
 <aop:aspectj-autoproxy/>
 ```
 
@@ -2379,19 +2381,20 @@ public void test2(){
 
 1. 原子性（atomicity）
 
-2. - 事务是原子性操作，由一系列动作组成，事务的原子性确保动作要么全部完成，要么完全不起作用
+   事务是原子性操作，由一系列动作组成，事务的原子性确保动作要么全部完成，要么完全不起作用
 
-3. 一致性（consistency）
+2. 一致性（consistency）
 
-4. - 一旦所有事务动作完成，事务就要被提交。数据和资源处于一种满足业务规则的一致性状态中
+   一旦所有事务动作完成，事务就要被提交。数据和资源处于一种满足业务规则的一致性状态中
 
-5. 隔离性（isolation）
+3. 隔离性（isolation）
 
-6. - 可能多个事务会同时处理相同的数据，因此每个事务都应该与其他事务隔离开来，防止数据损坏
+   可能多个事务会同时处理相同的数据，因此每个事务都应该与其他事务隔离开来，防止数据损坏
 
-7. 持久性（durability）
+4. 持久性（durability）
 
-8. - 事务一旦完成，无论系统发生什么错误，结果都不会受到影响。通常情况下，事务的结果被写到持久化存储器中
+   事务一旦完成，无论系统发生什么错误，结果都不会受到影响。通常情况下，事务的结果被写到持久化存储器中
+
 
 ### 11.2 测试
 
