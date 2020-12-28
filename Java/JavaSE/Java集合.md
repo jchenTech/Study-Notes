@@ -19,19 +19,24 @@
 
 ## 2 Collection接口
 
+![img](https://gitee.com/jchenTech/images/raw/master/img/20201228201629.png)
+
+
+
 ### 2.1 集合框架结构
 
 Collection接口：单列集合，用来存储一个一个的对象
 
 * List接口：存储有序的、可重复的数据。  -->“动态”数组
   * ArrayList、LinkedList、Vector
-  
 * Set接口：存储无序的、不可重复的数据   -->高中讲的“集合”
   * HashSet、LinkedHashSet、TreeSet
+* Queue接口：在队列前端删除，在队列后端进行插入操作
+  * ArrayQueue、LinkedList、PriorityQueue
 
 对应图示：
 
-![集合框架接口](https://raw.githubusercontent.com/jchenTech/images/main/img/20201025173546.png)
+![image-20201228202113900](https://gitee.com/jchenTech/images/raw/master/img/20201228202119.png)
 
 ### 2.2 Collection接口常用方法：
 
@@ -419,11 +424,249 @@ TreeSet:
    }
    ```
 
-## 6 Map接口
+## 6 Queue接口
+
+### 6.1 存储的数据特点
+
+队列是一种特殊的线性表，它只允许在表的前端（front）进行删除操作，而在表的后端（rear）进行插入操作。进行插入操作的端称为队尾，进行删除操作的端称为队头。队列中没有元素时，称为空队列。
+
+Java Queue是java.util包中提供的接口，并扩展了java.util.Collection接口。就像Java List一样，Java Queue是有序元素（或对象）的集合，但它以不同方式执行插入和删除操作。 在处理这些元素之前，我们可以使用Queue存储元素。
+
+- java.util.Queue接口是java.util.Collection接口的子类型。
+- 就像现实世界的排队（例如，在银行或ATM中）一样，Queue在队列的末尾插入元素并从队列的开头删除元素。
+- Java Queue遵循FIFO顺序来插入和删除它的元素。 FIFO代表先入先出。
+- Java Queue支持Collection接口的所有方法。
+- 最常用的Queue实现是LinkedList，ArrayBlockingQueue和PriorityQueue。
+- BlockingQueues不接受null元素。 如果我们执行任何与null相关的操作，它将抛出NullPointerException。
+- BlockingQueues用于实现基于生产者/消费者的应用程序。
+- BlockingQueues是线程安全的。
+- java.util包中可用的所有队列都是无界队列，java.util.concurrent包中可用的队列是有界队列。
+- 所有Deques都不是线程安全的。
+- ConcurrentLinkedQueue 是一个基于链表的无界线程安全队列。
+- 除了Deques之外，所有队列都支持在队列尾部插入并在队列的头部删除。Deques 是双端队列，它支持在队列两端插入和移除元素。
+
+### 6.2 常用实现类
+
+- Queue接口：
+  - Deque接口：
+    - **LinkedList**
+    - ArrayDeque
+  - AbstractQueue：
+    - **PriorityQueue**
+  - BlockingQueue
+    - .......
+
+
+
+### 6.3 常用方法
+
+queue可以使用所有collections的方法，另外还有一些常用方法：
+
+* add(E e)： 如果可以在不违反容量限制的情况下立即执行此操作，则将指定的元素插入此队列，成功时返回true，如果当前没有可用空间则抛出IllegalStateException。
+* offer(E e)： 如果可以在不违反容量限制的情况下立即执行此操作，则将指定的元素插入此队列，成功时返回true，如果当前没有可用空间则返回 false。
+* remove()：检索并删除此队列的头部元素。 此方法与poll的不同之处仅在于，如果此队列为空，则抛出异常 NoSuchElementException。
+* poll()： 检索并删除此队列的头部，如果此队列为空，则返回null。
+* element()：检索但不删除此队列的头部。 此方法与peek的不同之处仅在于，如果此队列为空，则抛出异常 NoSuchElementException。
+* peek()：检索但不移除此队列的头部，如果此队列为空，则返回null。
+
+### 6.4 队列常用操作方法的区别
+
+#### 6.4.1 add 与 offer 区别
+
+add 和 offer 方法都是向队列中添加一个元素。
+当一个大小受限制的队列满时，使用 add 方法将会抛出一个 unchecked 异常；使用 offer 方法会返回 false。
+
+#### 6.4.2 remove 与 poll 区别
+
+remove() 和 poll() 方法都是删除并返回队列头部的第一个元素。确切地说，从队列中删除哪个元素是队列排序策略的一个功能，该策略因实现而异。
+
+remove（）和 poll（）方法的不同之处仅在于队列为空时的行为：remove（）方法抛出异常，而poll（）方法返回null。
+
+#### 6.4.3 element 与 peek 区别
+
+element（）和 peek（）方法返回但不删除队列的头部元素。与 remove() 方法类似，在队列为空时， element() 抛出一个异常，而 peek() 返回 null。
+
+
+
+综上所述，Queue使用时要尽量避免Collection的add()和remove()以及element()方法，而是要使用offer()来加入元素，使用poll()来获取并移出元素，使用peek()方法查看前端而不移出该元素。它们的优点是通过返回值可以判断成功与否，add()和remove()方法在失败的时候会抛出异常。 
+
+### 6.5 源码分析
+
+```java
+public interface Queue<E> extends Collection<E> {
+    /**
+     * Inserts the specified element into this queue if it is possible to do so
+     * immediately without violating capacity restrictions, returning
+     * {@code true} upon success and throwing an {@code IllegalStateException}
+     * if no space is currently available.
+     *
+     * @param e the element to add
+     * @return {@code true} (as specified by {@link Collection#add})
+     * @throws IllegalStateException if the element cannot be added at this
+     *         time due to capacity restrictions
+     * @throws ClassCastException if the class of the specified element
+     *         prevents it from being added to this queue
+     * @throws NullPointerException if the specified element is null and
+     *         this queue does not permit null elements
+     * @throws IllegalArgumentException if some property of this element
+     *         prevents it from being added to this queue
+     */
+    boolean add(E e);
+
+    /**
+     * Inserts the specified element into this queue if it is possible to do
+     * so immediately without violating capacity restrictions.
+     * When using a capacity-restricted queue, this method is generally
+     * preferable to {@link #add}, which can fail to insert an element only
+     * by throwing an exception.
+     *
+     * @param e the element to add
+     * @return {@code true} if the element was added to this queue, else
+     *         {@code false}
+     * @throws ClassCastException if the class of the specified element
+     *         prevents it from being added to this queue
+     * @throws NullPointerException if the specified element is null and
+     *         this queue does not permit null elements
+     * @throws IllegalArgumentException if some property of this element
+     *         prevents it from being added to this queue
+     */
+    boolean offer(E e);
+
+    /**
+     * Retrieves and removes the head of this queue.  This method differs
+     * from {@link #poll poll} only in that it throws an exception if this
+     * queue is empty.
+     *
+     * @return the head of this queue
+     * @throws NoSuchElementException if this queue is empty
+     */
+    E remove();
+
+    /**
+     * Retrieves and removes the head of this queue,
+     * or returns {@code null} if this queue is empty.
+     *
+     * @return the head of this queue, or {@code null} if this queue is empty
+     */
+    E poll();
+
+    /**
+     * Retrieves, but does not remove, the head of this queue.  This method
+     * differs from {@link #peek peek} only in that it throws an exception
+     * if this queue is empty.
+     *
+     * @return the head of this queue
+     * @throws NoSuchElementException if this queue is empty
+     */
+    E element();
+
+    /**
+     * Retrieves, but does not remove, the head of this queue,
+     * or returns {@code null} if this queue is empty.
+     *
+     * @return the head of this queue, or {@code null} if this queue is empty
+     */
+    E peek();
+}
+```
+
+
+
+### 6.6 PriorityQueue优先队列
+
+#### 6.6.1 定义
+
+- 我们知道队列是遵循先进先出（First-In-First-Out）模式的，但有些时候需要在队列中基于优先级处理对象。举个例子，比方说我们有一个每日交易时段生成股票报告的应用程序，需要处理大量数据并且花费很多处理时间。客户向这个应用程序发送请求时，实际上就进入了队列。我们需要首先处理优先客户再处理普通用户。在这种情况下，Java的PriorityQueue(优先队列)会很有帮助。
+- PriorityQueue类在Java1.5中引入并作为 Java Collections Framework 的一部分。PriorityQueue是基于优先堆的一个无界队列，这个优先队列中的元素可以默认自然排序（升序）或者通过提供的Comparator（比较器）在队列实例化的时排序。
+- 优先队列不允许空值，而且不支持non-comparable（不可比较）的对象，比如用户自定义的类。优先队列要求使用Java Comparable和Comparator接口给对象排序，并且在排序时会按照优先级处理其中的元素。
+- **优先队列的头是基于自然排序或者Comparator排序的最小元素（即从头到尾升序）。如果有多个对象拥有同样的排序，那么就可能随机地取其中任意一个。当我们获取队列时，返回队列的头对象。**
+- 优先队列的大小是不受限制的，但在创建时可以指定初始大小。当我们向优先队列增加元素的时候，队列大小会自动增加。
+- PriorityQueue是非线程安全的，所以Java提供了PriorityBlockingQueue（实现BlockingQueue接口）用于Java多线程环境。
+- **我们有一个用户类，它没有提供任何类型的排序。当我们用它建立优先队列时，应该为其提供一个比较器对象。**
+
+
+
+我们以一道题为例来解释优先队列的使用。
+
+#### 6.6.2 案例理解
+
+我们有一个由平面上的点组成的列表 points。需要从中找出 K 个距离原点 (0, 0) 最近的点。（这里，平面上两点之间的距离是欧几里德距离。）你可以按任何顺序返回答案。除了点坐标的顺序之外，答案确保是唯一的。
+
+实例1
+
+```
+输入：points = [[1,3],[-2,2]], K = 1
+输出：[[-2,2]]
+解释： 
+(1, 3) 和原点之间的距离为 sqrt(10)，
+(-2, 2) 和原点之间的距离为 sqrt(8)，
+由于 sqrt(8) < sqrt(10)，(-2, 2) 离原点更近。
+我们只需要距离原点最近的 K = 1 个点，所以答案就是 [[-2,2]]。
+1234567
+```
+
+实例2
+
+```
+输入：points = [[3,3],[5,-1],[-2,4]], K = 2
+输出：[[3,3],[-2,4]]
+（答案 [[-2,4],[3,3]] 也会被接受。）
+123
+```
+
+思路
+
+维护一个大小为K的优先队列。始终让栈顶为队列中距离远点最大的点。我们要设计一个类，并为其设计一个比较器类。注意比较器里面的compare函数中，要让比较为从大到小。（队列头到队列尾）。
+
+代码
+
+```java
+class Solution {
+    public int[][] kClosest(int[][] points, int K) {
+        //使用K大小的最小堆。（优先队列）
+        int [][]ps=new int[K][2];
+        PriorityQueue<Point>pq=new PriorityQueue<>(pointComparator);
+        for(int i=0;i<points.length;i++)
+        {
+            pq.offer(new Point(points[i][0],points[i][1]));
+            if(pq.size()>K){
+                pq.poll();
+            }
+        }
+        for(int i=0;i<K;i++)
+        {
+            Point point=pq.poll();
+            ps[i][0]=point.x;
+            ps[i][1]=point.y;
+        }
+        return ps;
+    }
+     //匿名Comparator实现
+    public static Comparator<Point> pointComparator = new Comparator<Point>(){
+        //让当前距离最大的在队列，随时准备踢出去。因为队列底要放的是距离最小的
+        @Override
+        public int compare(Point p1, Point p2) {
+            return (int) ((p2.x*p2.x+p2.y*p2.y)-(p1.x*p1.x+p1.y*p1.y));
+        }
+    };
+    class Point{
+        int x;
+        int y;
+        public Point(int x,int y){
+            this.x=x;
+            this.y=y;
+        }
+    }
+}
+```
+
+
+
+## 7 Map接口
 
 双列集合框架：Map
 
-### 6.1 常用实现类
+### 7.1 常用实现类
 
 1.常用实现类结构
 Map:双列数据，存储key-value对的数据   ---类似于高中的函数：y = f(x)
@@ -448,7 +691,7 @@ HashMap的底层：数组+链表  （jdk7及之前)
 2. HashMap 和 Hashtable的异同？
 3. CurrentHashMap 与 Hashtable的异同？（暂时不讲)
 
-### 6.2 存储结构
+### 7.2 存储结构
 
 * Map中的key: 无序的、不可重复的，使用Set存储所有的key  ---> key所在的类要重写equals()和hashCode() （以HashMap为例)
 * Map中的value: 无序的、可重复的，使用Collection存储所有的value --->value所在的类要重写equals()
@@ -459,7 +702,7 @@ HashMap的底层：数组+链表  （jdk7及之前)
 
 ![HashMap存储结构](https://raw.githubusercontent.com/jchenTech/images/main/img/20201025205910.png)
 
-### 6.3 常用方法
+### 7.3 常用方法
 
 * 添加：put(Object key,Object value)
 * 删除：remove(Object key)
@@ -468,9 +711,9 @@ HashMap的底层：数组+链表  （jdk7及之前)
 * 长度：size()
 * 遍历：keySet() / values() / entrySet()
 
-### 6.4 内存结构说明（难点）
+### 7.4 内存结构说明（难点）
 
-#### 6.4.1 HashMap在jdk7中实现原理
+#### 7.4.1 HashMap在jdk7中实现原理
 
 ```java
 HashMap map = new HashMap();
@@ -503,7 +746,7 @@ map.put(key1,value1);
 
 在不断的添加过程中，会涉及到扩容问题，当超出临界值(且要存放的位置非空)时，扩容。默认的扩容方式：扩容为原来容量的2倍，并将原的数据复制过来。
 
-#### 6.4.2 HashMap在jdk8中的不同
+#### 7.4.2 HashMap在jdk8中的不同
 
 1. `new HashMap()`：底层没创建一个长度为16的数组
    jdk8底层的数组是：`Node[]`,而非`Entry[]`
@@ -512,7 +755,7 @@ map.put(key1,value1);
 * 形成链表时，七上八下（jdk7:新的元素指向旧的元素。jdk8：旧的元素指向新的元素）
 *  当数组的某一个索引位置上的元素以链表形式存在的数据个数 > 8 且当前数组的长度 > 64时，此时此索引位置上的所数据改为使用红黑树存储。
 
-#### 6.4.3 HashMap底层典型属性
+#### 7.4.3 HashMap底层典型属性
 
 * `DEFAULT_INITIAL_CAPACITY` : HashMap的默认容量，16
 * `DEFAULT_LOAD_FACTOR`：HashMap的默认加载因子：0.75
@@ -520,7 +763,7 @@ map.put(key1,value1);
 * `TREEIFY_THRESHOLD`：Bucket中链表长度大于该默认值，转化为红黑树:8
 * `MIN_TREEIFY_CAPACITY`：桶中的Node被树化时最小的hash表容量:64
 
-#### 6.4.4 LinkedHashMap的底层实现原理（了解）
+#### 7.4.4 LinkedHashMap的底层实现原理（了解）
 
 LinkedHashMap底层使用的结构与HashMap相同，因为LinkedHashMap继承于HashMap。
 
@@ -528,11 +771,11 @@ LinkedHashMap底层使用的结构与HashMap相同，因为LinkedHashMap继承�
 
 ![HashMap和LinkedHashMap](https://raw.githubusercontent.com/jchenTech/images/main/img/20201025210952.png)
 
-### 6.5 TreeMap的使用
+### 7.5 TreeMap的使用
 
 向TreeMap中添加key-value，要求key必须是由同一个类创建的对象，因为要照key进行排序：自然排序 、定制排序
 
-### 6.6 使用Properties读取配置文件
+### 7.6 使用Properties读取配置文件
 
 ```java
 //Properties:常用来处理配置文件。key和value都是String类型
@@ -564,11 +807,11 @@ public static void main(String[] args)  {
 }
 ```
 
-## 7 Collections工具类
+## 8 Collections工具类
 
 作用：操作Collection和Map的工具类
 
-### 7.1 常用方法
+### 8.1 常用方法
 
 * reverse(List)：反转 List 中元素的顺序
 * shuffle(List)：对 List 集合元素进行随机排序
