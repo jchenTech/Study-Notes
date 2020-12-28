@@ -21,7 +21,7 @@
 
 ![img](https://gitee.com/jchenTech/images/raw/master/img/20201228201629.png)
 
-
+![image-20201228213515563](https://gitee.com/jchenTech/images/raw/master/img/20201228213517.png)
 
 ### 2.1 集合框架结构
 
