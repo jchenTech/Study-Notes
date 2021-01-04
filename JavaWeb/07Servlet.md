@@ -3,7 +3,7 @@
 ### 1.1 Servlet介绍
 
 1. Servlet时JavaEE规范（接口）之一
-2. Servlet是JavaWeb三大组件之一，三大组件分别是Servlet，Filter过滤器和Listener过滤器
+2. Servlet是JavaWeb三大组件之一，三大组件分别是Servlet，Filter过滤器和Listener监听器
 3. Servlet是运行在服务器上的一个Java程序，**可以接受客户端发来的请求，并响应数据给客户端**
 
 ### 1.2 手动实现Servlet程序
