@@ -429,6 +429,8 @@ private static int[] merge(int[] left, int[] right) {
 
 ![快速排序](https://raw.githubusercontent.com/jchenTech/images/main/img/20201017221740.gif)
 
+![Picture1.png](https://pic.leetcode-cn.com/1612615552-rifQwI-Picture1.png)
+
 ## 算法实现
 
 ```java
