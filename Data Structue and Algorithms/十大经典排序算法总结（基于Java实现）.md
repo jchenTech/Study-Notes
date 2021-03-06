@@ -359,41 +359,60 @@ Shell排序虽然快，但是毕竟是插入排序，其数量级并没有后起
 
 ## 动图演示
 
+![d6scyutvpm](https://gitee.com/jchenTech/images/raw/master/img/20210306214651.png)
+
+
+
 ![归并排序](https://raw.githubusercontent.com/jchenTech/images/main/img/20201017190452.gif)
+
+
 
 ## 算法实现
 
 ```java
-public static int[] mergeSort(int[] arr) {
-    if (arr.length < 2) {
-        return arr;
-    }
-    int mid = arr.length / 2;
-    int[] left = Arrays.copyOfRange(arr, 0, mid);
-    int[] right = Arrays.copyOfRange(arr, mid, arr.length);
-
-    //递归调用mergeSort方法，将数组划分为长度小于等于2的子数组，在进行合并
-    return merge(mergeSort(left), mergeSort(right));
+private void mergeSort(int[] arr, int left, int right) {
+    if (left >= right) return;
+    int mid = (left + right) / 2;
+    mergeSort(arr, left, mid);
+    mergeSort(arr, mid + 1, right);
+    merge(arr, left, mid, right);
 }
 
-private static int[] merge(int[] left, int[] right) {
-    int[] res = new int[left.length + right.length];
-    int i = 0;
-    int j = 0;
-    for (int index = 0; index < res.length; index++) {
-        if (i >= left.length) {//左数组已全部合并
-            res[index] = right[j++];
-        }else if (j >= right.length){//右数组已全部合并
-            res[index] = left[i++];
-        }else if (left[i] < right[j]) {
-            res[index] = left[i++];
-        }else {
-            res[index] = right[j++];
+/**合并两个有序数组
+    */
+private void merge(int[] arr, int left, int mid, int right) {
+    int i = left;
+    int j = mid + 1;
+    int[] tmp = new int[right - left + 1];
+    int index = 0;
+
+    //把较小的数先移到新数组中
+    while (i <= mid && j <= right) {
+        if (arr[i] < arr[j]) {
+            tmp[index++] = arr[i++];
+        } else {
+            tmp[index++] = arr[j++];
         }
     }
-    return res;
+
+    //当右边遍历完时，把左边剩余的数移入数组 
+    while (i <= mid) {
+        tmp[index++] = arr[i++];
+    }
+
+    //当左边遍历完时，把右边剩余的数移入数组
+    while (j <= right) {
+        tmp[index++] = arr[j++];
+    }
+
+    //将临时数组中的内容拷贝回原来的数组中
+    for (int k = 0; k < index; k++) {
+        arr[left++] = tmp[k];
+    }
 }
 ```
+
+
 
 ## 稳定性
 
